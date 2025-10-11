@@ -127,6 +127,7 @@ export const CREATE_PROPERTY = gql`
 		createProperty(input: $input) {
 			_id
 			propertyCarType
+			propertyTransmission
 			kiaModel
 			bmwModel
 			hyundaiModel
@@ -161,38 +162,6 @@ export const CREATE_PROPERTY = gql`
 			deletedAt
 			createdAt
 			updatedAt
-			memberData {
-				_id
-				memberType
-				memberStatus
-				memberAuthType
-				memberPhone
-				memberNick
-				memberFullName
-				memberImage
-				memberAddress
-				memberDesc
-				memberProperties
-				memberArticles
-				memberFollowers
-				memberFollowings
-				memberPoints
-				memberLikes
-				memberViews
-				memberComments
-				memberRank
-				memberWarnings
-				memberBlocks
-				deletedAt
-				createdAt
-				updatedAt
-				accessToken
-			}
-			meLiked {
-				memberId
-				likeRefId
-				myFavorite
-			}
 		}
 	}
 `;
@@ -202,6 +171,8 @@ export const UPDATE_PROPERTY = gql`
 		updateProperty(input: $input) {
 			_id
 			propertyCarType
+			propertyModel
+			propertyTransmission
 			kiaModel
 			bmwModel
 			hyundaiModel

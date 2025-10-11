@@ -6,11 +6,10 @@ const thisYear = new Date().getFullYear();
 
 export const propertyYears: any = [];
 
-for (let i = 1970; i <= thisYear; i++) {
-	propertyYears.push(String(i));
+export const carYears: number[] = [];
+for (let i = 1990; i <= thisYear; i++) {
+	carYears.push(i);
 }
-
-export const propertySquare = [0, 25, 50, 75, 100, 125, 150, 200, 300, 500];
 
 export const Messages = {
 	error1: 'Something went wrong!',
@@ -21,3 +20,14 @@ export const Messages = {
 };
 
 export const topPropertyRank = 2;
+
+export const carMileage = [
+	0, 5000, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 100000, 120000, 150000, 180000, 200000, 250000,
+	300000,
+];
+
+export const carPrice: number[] = [];
+
+for (let i = 0; i <= 1000000; i += 1000) {
+	carPrice.push(i);
+}

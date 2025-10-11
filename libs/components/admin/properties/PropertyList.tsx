@@ -171,14 +171,14 @@ export const PropertyPanelList = (props: PropertyPanelListType) => {
 													<div>
 														<Avatar alt="Remy Sharp" src={propertyImage} sx={{ ml: '2px', mr: '10px' }} />
 													</div>
-													<div style={{ marginTop:'10px'}}>{property.propertyTitle}</div>
+													<div style={{ marginTop: '10px' }}>{property.propertyTitle}</div>
 												</Stack>
 											)}
 										</TableCell>
 										<TableCell align="center">{property.propertyPrice}</TableCell>
 										<TableCell align="center">{property.memberData?.memberNick}</TableCell>
 										<TableCell align="center">{property.propertyLocation}</TableCell>
-										<TableCell align="center">{property.propertyType}</TableCell>
+										<TableCell align="center">{property.propertyCarType}</TableCell>
 										<TableCell align="center">
 											{property.propertyStatus === PropertyStatus.DELETE && (
 												<Button

@@ -15,124 +15,123 @@ const About: NextPage = () => {
 				<Stack className={'intro'}>
 					<Stack className={'container'}>
 						<Stack className={'left'}>
-							<strong>We're on a Mission to Change View of Real Estate Field.</strong>
+							<strong>We're on a Mission to Transform the Car Marketplace.</strong>
 						</Stack>
 						<Stack className={'right'}>
 							<p>
-								It doesn’t matter how organized you are — a surplus of toys will always ensure your house is a mess
-								waiting to happen. Fortunately, getting kids on board with the idea of ditching their stuff is a lot
-								easier than it sounds.
+								Buying or selling a car should not be complicated. With our platform, you can easily browse, compare,
+								and secure the best deals.
 								<br />
 								<br />
-								Maecenas quis viverra metus, et efficitur ligula. Nam congue augue et ex congue, sed luctus lectus
-								congue. Integer convallis condimentum sem. Duis elementum tortor eget condimentum tempor. Praesent
-								sollicitudin lectus ut pharetra pulvinar.
+								From trusted dealers to private sellers, we make sure you get transparent pricing, secure transactions,
+								and a smooth car buying experience.
 							</p>
 							<Stack className={'boxes'}>
 								<div className={'box'}>
 									<div>
-										<img src="/img/icons/garden.svg" alt="" />
+										<img src="/img/icons/car.svg" alt="" />
 									</div>
-									<span>Modern Villa</span>
-									<p>Nullam sollicitudin blandit Nullam maximus.</p>
+									<span>Wide Car Selection</span>
+									<p>Choose from thousands of verified listings.</p>
 								</div>
 								<div className={'box'}>
 									<div>
 										<img src="/img/icons/securePayment.svg" alt="" />
 									</div>
 									<span>Secure Payment</span>
-									<p>Nullam sollicitudin blandit Nullam maximus.</p>
+									<p>Safe and reliable payment process.</p>
 								</div>
 							</Stack>
 						</Stack>
 					</Stack>
 				</Stack>
+
 				<Stack className={'statistics'}>
 					<Stack className={'container'}>
 						<Stack className={'banner'}>
-							<img src="/img/banner/header1.svg" alt="" />
+							<img src="/img/banner/carBanner.svg" alt="" />
 						</Stack>
 						<Stack className={'info'}>
 							<Box component={'div'}>
-								<strong>4M</strong>
-								<p>Award Winning</p>
+								<strong>10K+</strong>
+								<p>Cars Listed</p>
 							</Box>
 							<Box component={'div'}>
-								<strong>12K</strong>
-								<p>Property Ready</p>
+								<strong>500+</strong>
+								<p>Verified Dealers</p>
 							</Box>
 							<Box component={'div'}>
-								<strong>20M</strong>
-								<p>Happy Customer</p>
+								<strong>1M+</strong>
+								<p>Happy Drivers</p>
 							</Box>
 						</Stack>
 					</Stack>
 				</Stack>
+
 				<Stack className={'agents'}>
 					<Stack className={'container'}>
-						<span className={'title'}>Our Exclusive Agetns</span>
-						<p className={'desc'}>Aliquam lacinia diam quis lacus euismod</p>
-						<Stack className={'wrap'}>
-							{/*{[1, 2, 3, 4, 5].map(() => {*/}
-							{/*	return <AgentCard />;*/}
-							{/*})}*/}
-						</Stack>
+						<span className={'title'}>Our Top Dealers</span>
+						<p className={'desc'}>Find trusted car dealers near you</p>
+						<Stack className={'wrap'}>{/* DealerCard component */}</Stack>
 					</Stack>
 				</Stack>
+
 				<Stack className={'options'}>
-					<img src="/img/banner/aboutBanner.svg" alt="" className={'about-banner'} />
+					<img src="/img/banner/aboutCarBanner.svg" alt="" className={'about-banner'} />
 					<Stack className={'container'}>
-						<strong>Let’s find the right selling option for you</strong>
+						<strong>Choose the best car buying option for you</strong>
 						<Stack>
 							<div className={'icon-box'}>
 								<img src="/img/icons/security.svg" alt="" />
 							</div>
 							<div className={'text-box'}>
-								<span>Property Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
+								<span>Verified Listings</span>
+								<p>All cars are checked and verified before publishing.</p>
 							</div>
 						</Stack>
 						<Stack>
 							<div className={'icon-box'}>
-								<img src="/img/icons/keywording.svg" alt="" />
-							</div>
-							<div className={'text_-box'}>
-								<span>Property Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
-							</div>
-						</Stack>
-						<Stack>
-							<div className={'icon-box'}>
-								<img src="/img/icons/investment.svg" alt="" />
+								<img src="/img/icons/loan.svg" alt="" />
 							</div>
 							<div className={'text-box'}>
-								<span>Property Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
+								<span>Easy Financing</span>
+								<p>Get instant loan and leasing options with partners.</p>
+							</div>
+						</Stack>
+						<Stack>
+							<div className={'icon-box'}>
+								<img src="/img/icons/insurance.svg" alt="" />
+							</div>
+							<div className={'text-box'}>
+								<span>Insurance Support</span>
+								<p>Get the best insurance coverage with trusted providers.</p>
 							</div>
 						</Stack>
 						<Stack className={'btn'}>
-							Learn More
+							Explore Cars
 							<img src="/img/icons/rightup.svg" alt="" />
 						</Stack>
 					</Stack>
 				</Stack>
+
 				<Stack className={'partners'}>
 					<Stack className={'container'}>
-						<span>Trusted bu the world's best</span>
+						<span>Trusted by leading automotive brands</span>
 						<Stack className={'wrap'}>
-							<img src="/img/icons/brands/amazon.svg" alt="" />
-							<img src="/img/icons/brands/amd.svg" alt="" />
-							<img src="/img/icons/brands/cisco.svg" alt="" />
-							<img src="/img/icons/brands/dropcam.svg" alt="" />
-							<img src="/img/icons/brands/spotify.svg" alt="" />
+							<img src="/img/icons/brands/tesla.svg" alt="" />
+							<img src="/img/icons/brands/bmw.svg" alt="" />
+							<img src="/img/icons/brands/audi.svg" alt="" />
+							<img src="/img/icons/brands/toyota.svg" alt="" />
+							<img src="/img/icons/brands/mercedes.svg" alt="" />
 						</Stack>
 					</Stack>
 				</Stack>
+
 				<Stack className={'help'}>
 					<Stack className={'container'}>
 						<Box component={'div'} className={'left'}>
-							<strong>Need help? Talk to our expert.</strong>
-							<p>Talk to our experts or Browse through more properties.</p>
+							<strong>Need help? Talk to our car experts.</strong>
+							<p>Contact us or explore more car options today.</p>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'white'}>

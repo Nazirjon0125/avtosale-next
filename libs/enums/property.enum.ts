@@ -257,6 +257,11 @@ export enum PropertyFuel {
 	HYBRID = 'HYBRID',
 }
 
+export enum PropertyTransmission {
+	AUTOMATIC = 'AUTOMATIC',
+	MEXANIC = 'MEXANIC',
+}
+
 export enum PropertyCarBody {
 	SEDAN = 'SEDAN',
 	HATCHBACK = 'HATCHBACK',
@@ -270,6 +275,7 @@ export enum PropertyCarBody {
 	MINIVAN = 'MINIVAN',
 	LIMOUSINE = 'LIMOUSINE',
 	ROADSTER = 'ROADSTER',
+	OTHER = 'OTHER',
 }
 
 export enum PropertyStatus {
@@ -289,3 +295,43 @@ export enum PropertyLocation {
 	DAEJON = 'DAEJON',
 	JEJU = 'JEJU',
 }
+
+export enum CarOptions {
+	HEATED_SEATS = 'HEATED_SEATS',
+	VENTILATED_SEATS = 'VENTILATED_SEATS',
+	POWER_SEATS = 'POWER_SEATS',
+	LEATHER_SEATS = 'LEATHER_SEATS',
+	HEATED_STEERING = 'HEATED_STEERING',
+	SMART_KEY = 'SMART_KEY',
+	CRUISE_CONTROL = 'CRUISE_CONTROL',
+	NAVIGATION = 'NAVIGATION',
+	PARKING_SENSOR_REAR = 'PARKING_SENSOR_REAR',
+	PARKING_SENSOR_FRONT = 'PARKING_SENSOR_FRONT',
+	REAR_CAMERA = 'REAR_CAMERA',
+	CAMERA_360 = 'CAMERA_360',
+	SUNROOF = 'SUNROOF',
+	BLACK_BOX = 'BLACK_BOX',
+	LANE_KEEP_ASSIST = 'LANE_KEEP_ASSIST',
+	BLIND_SPOT_WARNING = 'BLIND_SPOT_WARNING',
+	AUTO_BRAKING = 'AUTO_BRAKING',
+	TWO_KEYS = 'TWO_KEYS',
+	NON_SMOKER = 'NON_SMOKER',
+}
+
+// enums mapping
+export const BrandModelsMap = {
+	[PropertyCarType.KIA]: Object.values(KiaModel),
+	[PropertyCarType.BMW]: Object.values(BMWModel),
+	[PropertyCarType.HYUNDAI]: Object.values(HyundaiModel),
+	[PropertyCarType.AUDI]: Object.values(AudiModel),
+	[PropertyCarType.MERCEDES]: Object.values(MercedesModel),
+	[PropertyCarType.TAYOTA]: Object.values(ToyotaModel),
+	[PropertyCarType.TESLA]: Object.values(TeslaModel),
+	[PropertyCarType.CHEVROLET]: Object.values(ChevroletModel),
+	[PropertyCarType.JEEP]: Object.values(JeepModel),
+	[PropertyCarType.HONDA]: Object.values(HondaModel),
+	[PropertyCarType.LAND_ROVER]: Object.values(LandRoverModel),
+	[PropertyCarType.LEXSUS]: Object.values(LexusModel),
+	[PropertyCarType.LINCOLN]: Object.values(LincolnModel),
+	[PropertyCarType.VOLVO]: Object.values(VolvoModel),
+};

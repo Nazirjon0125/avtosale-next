@@ -2,138 +2,158 @@ import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import { Stack, Box, Typography, Grid, IconButton, TextField, Button } from '@mui/material';
 import useDeviceDetect from '../hooks/useDeviceDetect';
-import { Stack, Box } from '@mui/material';
 import moment from 'moment';
 
 const Footer = () => {
 	const device = useDeviceDetect();
 
-	if (device == 'mobile') {
-		return (
-			<Stack className={'footer-container'}>
-				<Stack className={'main'}>
-					<Stack className={'left'}>
-						<Box component={'div'} className={'footer-box'}>
-							<img src="/img/logo/logoWhite.svg" alt="" className={'logo'} />
-						</Box>
-						<Box component={'div'} className={'footer-box'}>
-							<span>total free customer care</span>
-							<p>+82 10 4867 2909</p>
-						</Box>
-						<Box component={'div'} className={'footer-box'}>
-							<span>nee live</span>
-							<p>+82 10 4867 2909</p>
-							<span>Support?</span>
-						</Box>
-						<Box component={'div'} className={'footer-box'}>
-							<p>follow us on social media</p>
-							<div className={'media-box'}>
+	return (
+		<Box
+			component="footer"
+			sx={{
+				background: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364)',
+				color: '#fff',
+				pt: 6,
+				pb: 3,
+				px: { xs: 3, md: 10 },
+			}}
+		>
+			<Grid container spacing={5} justifyContent="space-between">
+				{/* Logo and Contact */}
+				<Grid item xs={12} md={3}>
+					<img src="/img/logo/logo.jpg" alt="AvtoBaraka Logo" style={{ width: 140, marginBottom: 16 }} />
+					<Typography variant="body2" sx={{ opacity: 0.8 }}>
+						Buy and sell cars anywhere, anytime in South Korea. Best cars at the best prices on AvtoBaraka.
+					</Typography>
+					<Box mt={2}>
+						<Typography variant="subtitle2">Customer Care (24/7)</Typography>
+						<Typography variant="body1">📞 +82 10 2754 5777</Typography>
+					</Box>
+				</Grid>
+
+				{/* Popular Searches */}
+				<Grid item xs={6} md={2}>
+					<Typography variant="h6" gutterBottom>
+						Popular Searches
+					</Typography>
+					<Stack spacing={1}>
+						<Typography variant="body2">Cars for Sale</Typography>
+						<Typography variant="body2">Used Cars</Typography>
+						<Typography variant="body2">New Cars</Typography>
+						<Typography variant="body2">Luxury Cars</Typography>
+					</Stack>
+				</Grid>
+
+				{/* Quick Links */}
+				<Grid item xs={6} md={2}>
+					<Typography variant="h6" gutterBottom>
+						Quick Links
+					</Typography>
+					<Stack spacing={1}>
+						<Typography variant="body2">Terms of Use</Typography>
+						<Typography variant="body2">Privacy Policy</Typography>
+						<Typography variant="body2">Pricing Plans</Typography>
+						<Typography variant="body2">Our Services</Typography>
+						<Typography variant="body2">Contact Support</Typography>
+						<Typography variant="body2">FAQs</Typography>
+					</Stack>
+				</Grid>
+
+				{/* Discover */}
+				<Grid item xs={6} md={2}>
+					<Typography variant="h6" gutterBottom>
+						Discover
+					</Typography>
+					<Stack spacing={1}>
+						<Typography variant="body2">Seoul</Typography>
+						<Typography variant="body2">Gyeonggi-do</Typography>
+						<Typography variant="body2">Busan</Typography>
+						<Typography variant="body2">Jeju</Typography>
+					</Stack>
+				</Grid>
+
+				{/* Newsletter */}
+				<Grid item xs={12} md={3}>
+					<Typography variant="h6" gutterBottom>
+						Stay Updated
+					</Typography>
+					<Stack direction="row" spacing={1}>
+						<TextField
+							placeholder="Your Email"
+							variant="outlined"
+							size="small"
+							sx={{
+								bgcolor: '#fff',
+								borderRadius: 1,
+								input: { color: '#000' },
+								flex: 1,
+							}}
+						/>
+						<Button variant="contained" color="warning">
+							Subscribe
+						</Button>
+					</Stack>
+					<Box mt={2}>
+						<Typography variant="body2">Follow us</Typography>
+						<Stack direction="row" spacing={1} mt={1}>
+							<IconButton
+								component="a"
+								href="https://facebook.com/koreaavtobaraka"
+								target="_blank"
+								rel="noopener noreferrer"
+								color="inherit"
+							>
 								<FacebookOutlinedIcon />
+							</IconButton>
+
+							<IconButton
+								component="a"
+								href="https://t.me/koreaavtobaraka"
+								target="_blank"
+								rel="noopener noreferrer"
+								color="inherit"
+							>
 								<TelegramIcon />
+							</IconButton>
+
+							<IconButton
+								component="a"
+								href="https://instagram.com/koreaavtobaraka"
+								target="_blank"
+								rel="noopener noreferrer"
+								color="inherit"
+							>
 								<InstagramIcon />
+							</IconButton>
+
+							<IconButton
+								component="a"
+								href="https://twitter.com/yourpage"
+								target="_blank"
+								rel="noopener noreferrer"
+								color="inherit"
+							>
 								<TwitterIcon />
-							</div>
-						</Box>
-					</Stack>
-					<Stack className={'right'}>
-						<Box component={'div'} className={'bottom'}>
-							<div>
-								<strong>Popular Search</strong>
-								<span>Property for Rent</span>
-								<span>Property Low to hide</span>
-							</div>
-							<div>
-								<strong>Quick Links</strong>
-								<span>Terms of Use</span>
-								<span>Privacy Policy</span>
-								<span>Pricing Plans</span>
-								<span>Our Services</span>
-								<span>Contact Support</span>
-								<span>FAQs</span>
-							</div>
-							<div>
-								<strong>Discover</strong>
-								<span>Seoul</span>
-								<span>Gyeongido</span>
-								<span>Busan</span>
-								<span>Jejudo</span>
-							</div>
-						</Box>
-					</Stack>
-				</Stack>
-				<Stack className={'second'}>
-					<span>© Nestar - All rights reserved. Nestar {moment().year()}</span>
-				</Stack>
+							</IconButton>
+						</Stack>
+					</Box>
+				</Grid>
+			</Grid>
+
+			{/* Bottom Section */}
+			<Stack
+				direction={{ xs: 'column', md: 'row' }}
+				justifyContent="space-between"
+				alignItems="center"
+				sx={{ mt: 5, pt: 3, borderTop: '1px solid rgba(255,255,255,0.2)' }}
+			>
+				<Typography variant="body2">© AvtoBaraka - All rights reserved. {moment().year()}</Typography>
+				<Typography variant="body2">Privacy · Terms · Sitemap</Typography>
 			</Stack>
-		);
-	} else {
-		return (
-			<Stack className={'footer-container'}>
-				<Stack className={'main'}>
-					<Stack className={'left'}>
-						<Box component={'div'} className={'footer-box'}>
-							<img src="/img/logo/logoWhite.svg" alt="" className={'logo'} />
-						</Box>
-						<Box component={'div'} className={'footer-box'}>
-							<span>total free customer care</span>
-							<p>+82 10 4867 2909</p>
-						</Box>
-						<Box component={'div'} className={'footer-box'}>
-							<span>nee live</span>
-							<p>+82 10 4867 2909</p>
-							<span>Support?</span>
-						</Box>
-						<Box component={'div'} className={'footer-box'}>
-							<p>follow us on social media</p>
-							<div className={'media-box'}>
-								<FacebookOutlinedIcon />
-								<TelegramIcon />
-								<InstagramIcon />
-								<TwitterIcon />
-							</div>
-						</Box>
-					</Stack>
-					<Stack className={'right'}>
-						<Box component={'div'} className={'top'}>
-							<strong>keep yourself up to date</strong>
-							<div>
-								<input type="text" placeholder={'Your Email'} />
-								<span>Subscribe</span>
-							</div>
-						</Box>
-						<Box component={'div'} className={'bottom'}>
-							<div>
-								<strong>Popular Search</strong>
-								<span>Property for Rent</span>
-								<span>Property Low to hide</span>
-							</div>
-							<div>
-								<strong>Quick Links</strong>
-								<span>Terms of Use</span>
-								<span>Privacy Policy</span>
-								<span>Pricing Plans</span>
-								<span>Our Services</span>
-								<span>Contact Support</span>
-								<span>FAQs</span>
-							</div>
-							<div>
-								<strong>Discover</strong>
-								<span>Seoul</span>
-								<span>Gyeongido</span>
-								<span>Busan</span>
-								<span>Jejudo</span>
-							</div>
-						</Box>
-					</Stack>
-				</Stack>
-				<Stack className={'second'}>
-					<span>© Nestar - All rights reserved. Nestar {moment().year()}</span>
-					<span>Privacy · Terms · Sitemap</span>
-				</Stack>
-			</Stack>
-		);
-	}
+		</Box>
+	);
 };
 
 export default Footer;

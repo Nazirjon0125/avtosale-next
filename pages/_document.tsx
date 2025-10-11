@@ -7,16 +7,29 @@ export default function Document() {
 				<meta name="robots" content="index,follow" />
 				<link rel="icon" type="image/png" href="/img/logo/favicon.svg" />
 
-				{/* SEO */}
-				<meta name="keyword" content={'nestar, nestar.uz, devex mern, mern nestjs fullstack'} />
+				{/* ✅ SEO */}
 				<meta
-					name={'description'}
+					name="keywords"
 					content={
-						'Buy and sell properties anywhere anytime in South Korea. Best Properties at Best prices on nestar.uz | ' +
-						'Покупайте и продавайте недвижимость в любой точке Южной Кореи в любое время. Лучшая недвижимость по лучшим ценам на nestar.uz | ' +
-						'대한민국 언제 어디서나 부동산을 사고팔 수 있습니다. Nestar.uz에서 최적의 가격으로 최고의 부동산을 만나보세요'
+						'avtosale, car marketplace, buy car, sell car, avto uz, avto korea, second hand cars, new cars, avtobaraka auto'
 					}
 				/>
+				<meta
+					name="description"
+					content={
+						'Buy and sell cars easily in South Korea. Find new and used cars at the best prices on avtobaraka.uz | ' +
+						'Покупайте и продавайте автомобили в Южной Корее по лучшим ценам на avtobaraka.uz | ' +
+						'대한민국에서 새차와 중고차를 최적의 가격에 사고파세요. avtobaraka.uz에서 최고의 자동차 거래를 경험하세요.'
+					}
+				/>
+				<meta property="og:title" content="AvtoBaraka Auto | Buy & Sell Cars in South Korea" />
+				<meta
+					property="og:description"
+					content="Find the best deals on new and used cars in South Korea. Fast, secure and trusted auto marketplace."
+				/>
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://avtobaraka.uz" />
+				<meta property="og:image" content="/img/logo/og-image.png" />
 			</Head>
 			<body>
 				<Main />

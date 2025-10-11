@@ -1,6 +1,7 @@
 import {
 	AudiModel,
 	BMWModel,
+	CarOptions,
 	ChevroletModel,
 	HondaModel,
 	HyundaiModel,
@@ -15,6 +16,7 @@ import {
 	PropertyFuel,
 	PropertyLocation,
 	PropertyStatus,
+	PropertyTransmission,
 	TeslaModel,
 	ToyotaModel,
 	VolvoModel,
@@ -23,6 +25,7 @@ import { Direction } from '../../enums/common.enum';
 
 export interface PropertyInput {
 	propertyCarType: PropertyCarType;
+	propertyModel: string;
 	kiaModel?: KiaModel;
 	bmwModel?: BMWModel;
 	hyundaiModel?: HyundaiModel;
@@ -38,14 +41,15 @@ export interface PropertyInput {
 	lincolnModel?: LincolnModel;
 	volvoModel?: VolvoModel;
 	propertyLocation: PropertyLocation;
-	propertyFuel: String;
-	propertyCarBody: String;
-
+	propertyFuel: PropertyFuel;
+	propertyCarBody: PropertyCarBody;
+	propertyBrand: string;
+	propertyTransmission: PropertyTransmission;
 	propertyAddress: string;
 	propertyTitle: string;
 	propertyPrice: number;
 	propertyMile: number;
-	propertyYear: Date;
+	propertyYear: number;
 	propertyImages: string[];
 	propertyDesc?: string;
 	propertyBarter?: boolean;
@@ -60,12 +64,14 @@ interface PISearch {
 	typeList?: PropertyCarType[];
 	fuelList?: PropertyFuel[];
 	options?: string[];
+	carOptions?: CarOptions[];
 	carBodyList?: PropertyCarBody[];
 	pricesRange?: PriceRange;
-	periodsRange?: PeriodsRange;
 	yearsRange?: YearsRange;
+	transmissionList?: PropertyTransmission[];
 	mileRange?: MileRange;
 	text?: string;
+	modelList?: string[];
 }
 
 export interface PropertiesInquiry {
@@ -101,19 +107,14 @@ export interface AllPropertiesInquiry {
 	search: ALPISearch;
 }
 
-interface PriceRange {
-	start: number;
-	end: number;
-}
-
-interface PeriodsRange {
-	start: Date | number;
-	end: Date | number;
+export interface PriceRange {
+	start?: number;
+	end?: number;
 }
 
 interface YearsRange {
-	start: Date | number;
-	end: Date | number;
+	start: number;
+	end: number;
 }
 
 interface MileRange {

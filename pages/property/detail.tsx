@@ -77,7 +77,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			if (data?.getProperty) setSlideImage(data?.getProperty.propertyImages[0]);
 		},
 	});
-  
+
 	const {
 		loading: getPropertiesLoading,
 		data: getPropertiesData,
@@ -201,7 +201,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	}
 
 	if (device === 'mobile') {
-		return <div>PROPERTY DETAIL PAGE</div>;
+		return <div>CAR DETAIL PAGE</div>;
 	} else {
 		return (
 			<div id={'property-detail-page'}>
@@ -259,13 +259,14 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									</Stack>
 									<Stack className={'bottom-box'}>
 										<Stack className="option">
-											<img src="/img/icons/bed.svg" alt="" /> <Typography>{property?.propertyBeds} bed</Typography>
+											<img src="/img/icons/bed.svg" alt="" /> <Typography>{property?.propertyFuel} fuel</Typography>
 										</Stack>
 										<Stack className="option">
-											<img src="/img/icons/room.svg" alt="" /> <Typography>{property?.propertyRooms} room</Typography>
+											<img src="/img/icons/room.svg" alt="" />{' '}
+											<Typography>{property?.propertyCarBody} car body</Typography>
 										</Stack>
 										<Stack className="option">
-											<img src="/img/icons/expand.svg" alt="" /> <Typography>{property?.propertySquare} m2</Typography>
+											<img src="/img/icons/expand.svg" alt="" /> <Typography>{property?.propertyMile} km</Typography>
 										</Stack>
 									</Stack>
 								</Stack>
@@ -323,8 +324,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</svg>
 										</Stack>
 										<Stack className={'option-includes'}>
-											<Typography className={'title'}>Bedroom</Typography>
-											<Typography className={'option-data'}>{property?.propertyBeds}</Typography>
+											<Typography className={'title'}>Fuel</Typography>
+											<Typography className={'option-data'}>{property?.propertyFuel}</Typography>
 										</Stack>
 									</Stack>
 									<Stack className={'option'}>
@@ -332,8 +333,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<img src={'/img/icons/room.svg'} />
 										</Stack>
 										<Stack className={'option-includes'}>
-											<Typography className={'title'}>Room</Typography>
-											<Typography className={'option-data'}>{property?.propertyRooms}</Typography>
+											<Typography className={'title'}>CarBody</Typography>
+											<Typography className={'option-data'}>{property?.propertyCarBody}</Typography>
 										</Stack>
 									</Stack>
 									<Stack className={'option'}>
@@ -350,7 +351,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</svg>
 										</Stack>
 										<Stack className={'option-includes'}>
-											<Typography className={'title'}>Year Build</Typography>
+											<Typography className={'title'}>Year</Typography>
 											<Typography className={'option-data'}>{moment(property?.createdAt).format('YYYY')}</Typography>
 										</Stack>
 									</Stack>
@@ -377,10 +378,10 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 												/>
 											</svg>
 										</Stack>
-										<Stack className={'option-includes'}>
+										{/* <Stack className={'option-includes'}>
 											<Typography className={'title'}>Size</Typography>
 											<Typography className={'option-data'}>{property?.propertySquare} m2</Typography>
-										</Stack>
+										</Stack> */}
 									</Stack>
 									<Stack className={'option'}>
 										<Stack className={'svg-box'}>
@@ -393,18 +394,18 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</svg>
 										</Stack>
 										<Stack className={'option-includes'}>
-											<Typography className={'title'}>Property Type</Typography>
-											<Typography className={'option-data'}>{property?.propertyType}</Typography>
+											<Typography className={'title'}>Car Brand</Typography>
+											<Typography className={'option-data'}>{property?.propertyCarType}</Typography>
 										</Stack>
 									</Stack>
 								</Stack>
 								<Stack className={'prop-desc-config'}>
 									<Stack className={'top'}>
-										<Typography className={'title'}>Property Description</Typography>
+										<Typography className={'title'}>Car Description</Typography>
 										<Typography className={'desc'}>{property?.propertyDesc ?? 'No Description!'}</Typography>
 									</Stack>
 									<Stack className={'bottom'}>
-										<Typography className={'title'}>Property Details</Typography>
+										<Typography className={'title'}>Car Details</Typography>
 										<Stack className={'info-box'}>
 											<Stack className={'left'}>
 												<Box component={'div'} className={'info'}>
@@ -412,29 +413,29 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 													<Typography className={'data'}>${formatterStr(property?.propertyPrice)}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Property Size</Typography>
-													<Typography className={'data'}>{property?.propertySquare} m2</Typography>
+													<Typography className={'title'}>Mile</Typography>
+													<Typography className={'data'}>{property?.propertyMile} km</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Rooms</Typography>
-													<Typography className={'data'}>{property?.propertyRooms}</Typography>
+													<Typography className={'title'}>Fuel</Typography>
+													<Typography className={'data'}>{property?.propertyFuel}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Bedrooms</Typography>
-													<Typography className={'data'}>{property?.propertyBeds}</Typography>
+													<Typography className={'title'}>CarBody</Typography>
+													<Typography className={'data'}>{property?.propertyCarBody}</Typography>
 												</Box>
 											</Stack>
 											<Stack className={'right'}>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Year Built</Typography>
+													<Typography className={'title'}>Year manufa</Typography>
 													<Typography className={'data'}>{moment(property?.createdAt).format('YYYY')}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Property Type</Typography>
-													<Typography className={'data'}>{property?.propertyType}</Typography>
+													<Typography className={'title'}>Car Brand</Typography>
+													<Typography className={'data'}>{property?.propertyCarType}</Typography>
 												</Box>
 												<Box component={'div'} className={'info'}>
-													<Typography className={'title'}>Property Options</Typography>
+													<Typography className={'title'}>Car Options</Typography>
 													<Typography className={'data'}>
 														For {property?.propertyBarter && 'Barter'} {property?.propertyRent && 'Rent'}
 													</Typography>
@@ -443,12 +444,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 									</Stack>
 								</Stack>
-								<Stack className={'floor-plans-config'}>
-									<Typography className={'title'}>Floor Plans</Typography>
-									<Stack className={'image-box'}>
-										<img src={'/img/property/floorPlan.png'} alt={'image'} />
-									</Stack>
-								</Stack>
+
 								<Stack className={'address-config'}>
 									<Typography className={'title'}>Address</Typography>
 									<Stack className={'map-box'}>

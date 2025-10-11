@@ -40,20 +40,20 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	/** APOLLO REQUESTS **/
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
 
-const {
-  loading: getAgentsLoading,
-  data: getAgentsData,
-  error: getAgentsError,
-  refetch: getAgentsRefetch,
-} = useQuery(GET_AGENTS, {
-  fetchPolicy: 'network-only',
-  variables: { input: searchFilter },
-  notifyOnNetworkStatusChange: true,
-  onCompleted: (data: T) => {
-    setAgents(data?.getAgents?.list);
-    setTotal(data?.getAgents?.metaCounter[0]?.total);
-  },
-});
+	const {
+		loading: getAgentsLoading,
+		data: getAgentsData,
+		error: getAgentsError,
+		refetch: getAgentsRefetch,
+	} = useQuery(GET_AGENTS, {
+		fetchPolicy: 'network-only',
+		variables: { input: searchFilter },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setAgents(data?.getAgents?.list);
+			setTotal(data?.getAgents?.metaCounter[0]?.total);
+		},
+	});
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.input) {
@@ -107,26 +107,26 @@ const {
 		setCurrentPage(value);
 	};
 	const likeMemberHandler = async (user: any, id: string) => {
-  try {
-    if (!id) return;
-    if (!user._id) throw new Error(Messages.error2);
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
 
-    await likeTargetMember({
-      variables: {
-        input: id,
-      },
-    });
+			await likeTargetMember({
+				variables: {
+					input: id,
+				},
+			});
 
-    await getAgentsRefetch({ input: searchFilter });
-    await sweetTopSmallSuccessAlert('success', 800);
-  } catch (err: any) {
-    console.log('ERROR, likePropertyHandler:', err.message);
-    sweetMixinErrorAlert(err.message).then();
-  }
-};
+			await getAgentsRefetch({ input: searchFilter });
+			await sweetTopSmallSuccessAlert('success', 800);
+		} catch (err: any) {
+			console.log('ERROR, likePropertyHandler:', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
 
 	if (device === 'mobile') {
-		return <h1>AGENTS PAGE MOBILE</h1>;
+		return <h1>DIILER PAGE MOBILE</h1>;
 	} else {
 		return (
 			<Stack className={'agent-list-page'}>
@@ -175,11 +175,11 @@ const {
 						{agents?.length === 0 ? (
 							<div className={'no-data'}>
 								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No Agents found!</p>
+								<p>No Diller found!</p>
 							</div>
 						) : (
 							agents.map((agent: Member) => {
-								return <AgentCard agent={agent} key={agent._id} likeMemberHandler={likeMemberHandler}/>;
+								return <AgentCard agent={agent} key={agent._id} likeMemberHandler={likeMemberHandler} />;
 							})
 						)}
 					</Stack>
@@ -200,7 +200,7 @@ const {
 
 						{agents.length !== 0 && (
 							<span>
-								Total {total} agent{total > 1 ? 's' : ''} available
+								Total {total} diller{total > 1 ? 's' : ''} available
 							</span>
 						)}
 					</Stack>

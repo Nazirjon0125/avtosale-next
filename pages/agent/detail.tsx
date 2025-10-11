@@ -186,7 +186,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		}
 	};
 	if (device === 'mobile') {
-		return <div>AGENT DETAIL PAGE MOBILE</div>;
+		return <div>DILLER DETAIL PAGE MOBILE</div>;
 	} else {
 		return (
 			<Stack className={'agent-detail-page'}>
@@ -237,7 +237,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 							) : (
 								<div className={'no-data'}>
 									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No properties found!</p>
+									<p>No cars found!</p>
 								</div>
 							)}
 						</Stack>

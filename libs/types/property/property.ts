@@ -15,6 +15,7 @@ import {
 	PropertyFuel,
 	PropertyLocation,
 	PropertyStatus,
+	PropertyTransmission,
 	TeslaModel,
 	ToyotaModel,
 	VolvoModel,
@@ -52,6 +53,7 @@ export interface Property {
 	propertyCarBody: PropertyCarBody;
 	propertyStatus: PropertyStatus;
 	propertyLocation: PropertyLocation;
+	propertyTransmission: PropertyTransmission;
 	propertyAddress: string;
 	propertyTitle: string;
 	propertyPrice: number;
