@@ -49,6 +49,7 @@ export interface Property {
 	lexusModel?: LexusModel;
 	lincolnModel?: LincolnModel;
 	volvoModel?: VolvoModel;
+	propertyModel: string;
 	propertyFuel: PropertyFuel;
 	propertyCarBody: PropertyCarBody;
 	propertyStatus: PropertyStatus;
@@ -70,7 +71,7 @@ export interface Property {
 	memberId: string;
 	soldAt?: Date;
 	deletedAt?: Date;
-	constructedAt?: Date;
+	constructedAt?: number;
 	createdAt: Date;
 	updatedAt: Date;
 	/** from aggregation **/

@@ -3,7 +3,7 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import Head from 'next/head';
 import Top from '../Top';
 import Footer from '../Footer';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import FiberContainer from '../common/FiberContainer';
 import HeaderFilter from '../homepage/HeaderFilter';
 import { userVar } from '../../../apollo/store';
@@ -13,11 +13,13 @@ import Chat from '../Chat';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useTranslation } from 'next-i18next';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
 		const device = useDeviceDetect();
 		const user = useReactiveVar(userVar);
+		const { t, i18n } = useTranslation('common');
 
 		/** LIFECYCLES **/
 		useEffect(() => {
@@ -54,7 +56,7 @@ const withLayoutMain = (Component: any) => {
 				<>
 					<Head>
 						<title>AvtoBaraka</title>
-						<meta name={'title'} content={`Nestar`} />
+						<meta name={'title'} content={`AvtoBaraka`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
@@ -63,6 +65,10 @@ const withLayoutMain = (Component: any) => {
 
 						<Stack className={'header-main'}>
 							<Stack className={'container'}>
+								<Typography className={'header-main-subtitle'}>
+									{t('Browse, Compare, and Connect with the Best Local Cars – Effortlessly.')}
+								</Typography>
+								<Typography className={'header-main-title'}>{t('Drive the Car You’ve Always Dreamed Of')}</Typography>
 								<HeaderFilter />
 							</Stack>
 						</Stack>

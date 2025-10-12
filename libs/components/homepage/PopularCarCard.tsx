@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Box, Divider, Typography } from '@mui/material';
+import { Stack, Box, Divider, Typography, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Property } from '../../types/property/property';
@@ -8,6 +8,11 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import SpeedIcon from '@mui/icons-material/Speed';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface PopularPropertyCardProps {
 	property: Property;
@@ -101,29 +106,40 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					<strong className={'title'} onClick={() => pushDetailHandler(property._id)}>
 						{property.propertyTitle}
 					</strong>
-					<p className={'desc'}>{property.propertyAddress}</p>
-					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyCarBody} bed</span>
-						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyFuel} rooms</span>
-						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertyMile} m2</span>
-						</div>
+					<p className={'car-desc'}>{property.propertyDesc}</p>
+
+					<div className={'car-specs'}>
+						<Tooltip title={'Manufactured Year'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<CalendarTodayIcon className={'spec-icon'} />
+								<span>{property?.constructedAt}</span>
+							</div>
+						</Tooltip>
+						<Tooltip title={'Car Mileage'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<SpeedIcon className={'spec-icon'} />
+								<span>{property?.propertyMile?.toLocaleString()}</span>
+							</div>
+						</Tooltip>
+						<Tooltip title={'Car Fuel Type'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<LocalGasStationIcon className={'spec-icon'} />
+								<span>{property?.propertyFuel}</span>
+							</div>
+						</Tooltip>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
-					<div className={'bott'}>
-						<p>{property?.propertyRent ? 'rent' : 'sale'}</p>
+					<div className={'bottom-section'}>
+						<div className="brand-model-box">
+							<span>Brand: {property?.propertyCarType}</span>
+							<span>Model: {property?.propertyModel}</span>
+						</div>
 						<div className="view-like-box">
 							<IconButton color={'default'}>
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{property?.propertyViews}</Typography>
+							{/* Like Button with Count */}
 						</div>
 					</div>
 				</Box>

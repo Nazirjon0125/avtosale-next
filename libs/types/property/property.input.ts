@@ -55,7 +55,7 @@ export interface PropertyInput {
 	propertyBarter?: boolean;
 	propertyRent?: boolean;
 	memberId?: string;
-	constructedAt?: Date;
+	constructedAt?: number;
 }
 
 interface PISearch {

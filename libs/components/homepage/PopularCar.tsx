@@ -5,13 +5,18 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
-import PopularPropertyCard from './PopularCarCard';
+
 import { Property } from '../../types/property/property';
 import Link from 'next/link';
 import { PropertiesInquiry } from '../../types/property/property.input';
 import { GET_PROPERTIES } from '../../../apollo/user/query';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { T } from '../../types/common';
+import PopularCarCard from './PopularCarCard';
+import PopularPropertyCard from './PopularCarCard';
+import { LIKE_TARGET_PROPERTY } from '../../../apollo/user/mutation';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import { Message } from '../../enums/common.enum';
 
 interface PopularPropertiesProps {
 	initialInput: PropertiesInquiry;
@@ -23,6 +28,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 	const [popularProperties, setPopularProperties] = useState<Property[]>([]);
 
 	/** APOLLO REQUESTS **/
+
 	const {
 		loading: getPropertiesLoading,
 		data: getPropertiesData,
@@ -36,16 +42,16 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 			setPopularProperties(data?.getProperties?.list);
 		},
 	});
-	/** HANDLERS **/
 
+	/** HANDLERS **/
 	if (!popularProperties) return null;
 
 	if (device === 'mobile') {
 		return (
-			<Stack className={'popular-properties'}>
+			<Stack className={'popular-cars'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Popular cars</span>
+						<span>Popular properties</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
@@ -58,7 +64,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							{popularProperties.map((property: Property) => {
 								return (
 									<SwiperSlide key={property._id} className={'popular-property-slide'}>
-										<PopularPropertyCard property={property} />
+										<PopularCarCard property={property} />
 									</SwiperSlide>
 								);
 							})}
@@ -73,7 +79,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Popular cars</span>
+							<span>Popular properties</span>
 							<p>Popularity is based on views</p>
 						</Box>
 						<Box component={'div'} className={'right'}>
