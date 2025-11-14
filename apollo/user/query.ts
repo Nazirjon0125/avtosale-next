@@ -21,8 +21,11 @@ export const GET_AGENTS = gql`
 				memberWarnings
 				memberBlocks
 				memberProperties
+				memberArticles
 				memberRank
 				memberPoints
+				memberFollowers
+				memberFollowings
 				memberLikes
 				memberViews
 				deletedAt
@@ -87,6 +90,7 @@ export const GET_PROPERTY = gql`
 		getProperty(propertyId: $input) {
 			_id
 			propertyCarType
+			propertyModel
 			kiaModel
 			bmwModel
 			hyundaiModel
@@ -103,6 +107,7 @@ export const GET_PROPERTY = gql`
 			volvoModel
 			propertyFuel
 			propertyCarBody
+			propertyTransmission
 			propertyStatus
 			propertyLocation
 			propertyAddress
@@ -161,6 +166,7 @@ export const GET_PROPERTIES = gql`
 			list {
 				_id
 				propertyCarType
+				propertyModel
 				kiaModel
 				bmwModel
 				hyundaiModel
@@ -177,6 +183,7 @@ export const GET_PROPERTIES = gql`
 				volvoModel
 				propertyFuel
 				propertyCarBody
+				propertyTransmission
 				propertyStatus
 				propertyLocation
 				propertyAddress
@@ -241,6 +248,8 @@ export const GET_AGENT_PROPERTIES = gql`
 			list {
 				_id
 				propertyCarType
+				propertyTransmission
+				propertyModel
 				kiaModel
 				bmwModel
 				hyundaiModel
@@ -308,6 +317,7 @@ export const GET_FAVORITES = gql`
 				volvoModel
 				propertyFuel
 				propertyCarBody
+				propertyTransmission
 				propertyStatus
 				propertyLocation
 				propertyAddress
@@ -359,6 +369,7 @@ export const GET_VISITED = gql`
 				volvoModel
 				propertyFuel
 				propertyCarBody
+				propertyTransmission
 				propertyStatus
 				propertyLocation
 				propertyAddress
@@ -674,6 +685,68 @@ export const GET_CAR_BRANDS_BY_USER = gql`
 			carBrandStatus
 			createdAt
 			updatedAt
+		}
+	}
+`;
+
+export const GET_NOTIFICATIONS = gql`
+	query MyNotifs($input: NotificationInquiry!) {
+		myNotifications(input: $input) {
+			list {
+				_id
+				notificationType
+				notificationStatus
+				notificationGroup
+				notificationTitle
+				notificationDesc
+				authorId
+				receiverId
+				propertyId
+				articleId
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_UNREADNOTIFICATIONS = gql`
+	query UnreadNotificationsCount {
+		unreadNotificationsCount
+	}
+`;
+
+export const GET_NOTICE = gql`
+	query GetNotice($id: String!) {
+		getNotice(noticeId: $id) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const GET_NOTICES = gql`
+	query GetNotices($input: NoticesInquiry!) {
+		getNotices(input: $input) {
+			totalCount
+			page
+			limit
+			notices {
+				_id
+				noticeTitle
+				noticeContent
+				noticeCategory
+				noticeStatus
+				createdAt
+			}
 		}
 	}
 `;

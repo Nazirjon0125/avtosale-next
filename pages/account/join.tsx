@@ -73,7 +73,7 @@ const Join: NextPage = () => {
 						<Stack className={'left'}>
 							{/* @ts-ignore */}
 							<Box className={'logo'}>
-								<img src="/img/logo/logoText.svg" alt="" />
+								<img src="/img/logo/avtologotip.png" alt="" />
 								<span>AvtoBaraka</span>
 							</Box>
 							<Box className={'info'}>
@@ -85,7 +85,7 @@ const Join: NextPage = () => {
 									<span>Nickname</span>
 									<input
 										type="text"
-										placeholder={'Enter Nickname'}
+										placeholder={'Nickname'}
 										onChange={(e) => handleInput('nick', e.target.value)}
 										required={true}
 										onKeyDown={(event) => {
@@ -98,7 +98,7 @@ const Join: NextPage = () => {
 									<span>Password</span>
 									<input
 										type="text"
-										placeholder={'Enter Password'}
+										placeholder={'Password'}
 										onChange={(e) => handleInput('password', e.target.value)}
 										required={true}
 										onKeyDown={(event) => {
@@ -206,7 +206,6 @@ const Join: NextPage = () => {
 								)}
 							</Box>
 						</Stack>
-						<Stack className={'right'}></Stack>
 					</Stack>
 				</Stack>
 			</Stack>

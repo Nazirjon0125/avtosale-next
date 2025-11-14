@@ -11,7 +11,9 @@ import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { CustomJwtPayload } from '../../types/customJwtPayload';
-
+import SpeedIcon from '@mui/icons-material/Speed';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 interface PropertyBigCardProps {
 	property: Property;
 	likePropertyHandler?: any;
@@ -52,16 +54,16 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 					<p className={'desc'}>{property?.propertyAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyBeds} bed</span>
+							<DirectionsCarIcon />
+							<span>{property?.propertyCarBody} </span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyRooms} rooms</span>
+							<LocalGasStationIcon className="option-icon" />
+							<span>{property?.propertyFuel} </span>
 						</div>
 						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertySquare} m2</span>
+							<SpeedIcon className="option-icon" />
+							<span>{property?.propertyMile} km</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
@@ -77,7 +79,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 							<Typography className="view-cnt">{property?.propertyViews}</Typography>
 							<IconButton
 								color={'default'}
-								onClick={(e: { stopPropagation: () => void; }) => {
+								onClick={(e: { stopPropagation: () => void }) => {
 									e.stopPropagation();
 									likePropertyHandler(user, property?._id);
 								}}
@@ -98,4 +100,3 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 };
 
 export default PropertyBigCard;
-  

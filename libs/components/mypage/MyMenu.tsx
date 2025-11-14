@@ -55,7 +55,7 @@ const MyMenu = () => {
 					</Stack>
 				</Stack>
 				<Stack className={'sections'}>
-					<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }}>
+					<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '228px' }}>
 						<Typography className="title" variant={'h5'}>
 							MANAGE LISTINGS
 						</Typography>
@@ -77,7 +77,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
 												)}
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													Add Property
+													Add Car
 												</Typography>
 												<IconButton aria-label="delete" sx={{ ml: '40px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
@@ -100,7 +100,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
 												)}
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													My Properties
+													My Cars
 												</Typography>
 												<IconButton aria-label="delete" sx={{ ml: '36px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
@@ -110,6 +110,57 @@ const MyMenu = () => {
 									</ListItem>
 								</>
 							)}
+							{user.memberType === 'USER' && (
+								<>
+									<ListItem className={pathname === 'addProperty' ? 'focus' : ''}>
+										<Link
+											href={{
+												pathname: '/mypage',
+												query: { category: 'addProperty' },
+											}}
+											scroll={false}
+										>
+											<div className={'flex-box'}>
+												{category === 'addProperty' ? (
+													<img className={'com-icon'} src={'/img/icons/whiteTab.svg'} alt={'com-icon'} />
+												) : (
+													<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
+												)}
+												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+													Add Car
+												</Typography>
+												<IconButton aria-label="delete" sx={{ ml: '40px' }}>
+													<PortraitIcon style={{ color: 'red' }} />
+												</IconButton>
+											</div>
+										</Link>
+									</ListItem>
+									<ListItem className={pathname === 'myProperties' ? 'focus' : ''}>
+										<Link
+											href={{
+												pathname: '/mypage',
+												query: { category: 'myProperties' },
+											}}
+											scroll={false}
+										>
+											<div className={'flex-box'}>
+												{category === 'myProperties' ? (
+													<img className={'com-icon'} src={'/img/icons/homeWhite.svg'} alt={'com-icon'} />
+												) : (
+													<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
+												)}
+												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+													My Cars
+												</Typography>
+												<IconButton aria-label="delete" sx={{ ml: '36px' }}>
+													<PortraitIcon style={{ color: 'red' }} />
+												</IconButton>
+											</div>
+										</Link>
+									</ListItem>
+								</>
+							)}
+
 							<ListItem className={pathname === 'myFavorites' ? 'focus' : ''}>
 								<Link
 									href={{

@@ -13,6 +13,7 @@ import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 interface PopularPropertyCardProps {
 	property: Property;
@@ -29,6 +30,8 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 		console.log('pushDetailHandler, id:', propertyId);
 		await router.push({ pathname: `/property/detail`, query: { id: propertyId } });
 	};
+
+	const isLiked = property?.meLiked && property?.meLiked[0]?.myFavorite;
 
 	if (device === 'mobile') {
 		return (
@@ -108,17 +111,17 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					</strong>
 					<p className={'car-desc'}>{property.propertyDesc}</p>
 
-					<div className={'car-specs'}>
+					<div className={'car-specs '}>
 						<Tooltip title={'Manufactured Year'} placement="top" arrow>
 							<div className={'spec-item'}>
 								<CalendarTodayIcon className={'spec-icon'} />
-								<span>{property?.constructedAt}</span>
+								<span>{property?.propertyYear} </span>
 							</div>
 						</Tooltip>
 						<Tooltip title={'Car Mileage'} placement="top" arrow>
 							<div className={'spec-item'}>
 								<SpeedIcon className={'spec-icon'} />
-								<span>{property?.propertyMile?.toLocaleString()}</span>
+								<span>{property?.propertyMile?.toLocaleString()} Km</span>
 							</div>
 						</Tooltip>
 						<Tooltip title={'Car Fuel Type'} placement="top" arrow>
@@ -127,8 +130,13 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 								<span>{property?.propertyFuel}</span>
 							</div>
 						</Tooltip>
+						<Tooltip title={'Car Transmission'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<SettingsIcon className="spec-icon" />
+								<span>{property.propertyTransmission}</span>
+							</div>
+						</Tooltip>
 					</div>
-					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bottom-section'}>
 						<div className="brand-model-box">
 							<span>Brand: {property?.propertyCarType}</span>

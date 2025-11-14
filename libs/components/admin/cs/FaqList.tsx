@@ -1,202 +1,249 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+// libs/components/admin/cs/FaqList.tsx
+import React, { useMemo, useState } from 'react';
 import {
-	TableCell,
-	TableHead,
-	TableBody,
-	TableRow,
-	Table,
-	TableContainer,
+	Box,
 	Button,
-	Menu,
-	Fade,
+	Checkbox,
+	Chip,
+	IconButton,
+	InputAdornment,
 	MenuItem,
+	OutlinedInput,
+	Select,
+	Stack,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TablePagination,
+	TableRow,
+	Tooltip,
+	Typography,
 } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import { Stack } from '@mui/material';
+import EditRounded from '@mui/icons-material/EditRounded';
+import DeleteRounded from '@mui/icons-material/DeleteRounded';
+import PublishedWithChangesRounded from '@mui/icons-material/PublishedWithChangesRounded';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import SearchIcon from '@mui/icons-material/Search';
+import { useMutation, useQuery } from '@apollo/client';
 
-interface Data {
-	category: string;
-	title: string;
-	writer: string;
-	date: string;
-	status: string;
-	id?: string;
+import { Direction } from '../../../enums/common.enum';
+import { NoticeCategory, NoticeStatus } from '../../../enums/notice.enum';
+import { Notice } from '../../../types/notice/notice';
+import { NoticeSearchInput, NoticesInquiry } from '../../../types/notice/notice.input';
+import { GET_NOTICES } from '../../../../apollo/user/query';
+import { CHANGENOTICESTATUS, DELETENOTICE } from '../../../../apollo/admin/mutation';
+
+type OnEdit = (row: Notice) => void;
+
+interface Props {
+	onEdit?: OnEdit; // optional: open your editor dialog/page
 }
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-	if (b[orderBy] < a[orderBy]) {
-		return -1;
-	}
-	if (b[orderBy] > a[orderBy]) {
-		return 1;
-	}
-	return 0;
-}
+const statusColor = (s: NoticeStatus) =>
+	s === NoticeStatus.ACTIVE ? 'success' : s === NoticeStatus.HOLD ? 'warning' : 'default';
 
-type Order = 'asc' | 'desc';
+export const FaqArticlesPanelList: React.FC<Props> = ({ onEdit }) => {
+	// table/pagination/filter state
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(20);
+	const [status, setStatus] = useState<NoticeStatus | 'ALL'>('ALL');
+	const [text, setText] = useState('');
 
-interface HeadCell {
-	disablePadding: boolean;
-	id: keyof Data;
-	label: string;
-	numeric: boolean;
-}
+	// selection for bulk ops
+	const [selected, setSelected] = useState<string[]>([]);
 
-const headCells: readonly HeadCell[] = [
-	{
-		id: 'category',
-		numeric: true,
-		disablePadding: false,
-		label: 'CATEGORY',
-	},
-	{
-		id: 'title',
-		numeric: true,
-		disablePadding: false,
-		label: 'TITLE',
-	},
-
-	{
-		id: 'writer',
-		numeric: true,
-		disablePadding: false,
-		label: 'WRITER',
-	},
-	{
-		id: 'date',
-		numeric: true,
-		disablePadding: false,
-		label: 'DATE',
-	},
-	{
-		id: 'status',
-		numeric: false,
-		disablePadding: false,
-		label: 'STATUS',
-	},
-];
-
-interface EnhancedTableProps {
-	numSelected: number;
-	onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	order: Order;
-	orderBy: string;
-	rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-	const { onSelectAllClick } = props;
-
-	return (
-		<TableHead>
-			<TableRow>
-				{headCells.map((headCell) => (
-					<TableCell
-						key={headCell.id}
-						align={headCell.numeric ? 'left' : 'center'}
-						padding={headCell.disablePadding ? 'none' : 'normal'}
-					>
-						{headCell.label}
-					</TableCell>
-				))}
-			</TableRow>
-		</TableHead>
+	const input: NoticesInquiry = useMemo(
+		() => ({
+			page,
+			limit,
+			sort: 'createdAt',
+			direction: Direction.DESC,
+			search: {
+				noticeCategory: NoticeCategory.FAQ,
+				noticeStatus: status === 'ALL' ? undefined : status,
+				text: text.trim() || undefined,
+			} as NoticeSearchInput,
+		}),
+		[page, limit, status, text],
 	);
-}
 
-interface FaqArticlesPanelListType {
-	dense?: boolean;
-	membersData?: any;
-	searchMembers?: any;
-	anchorEl?: any;
-	handleMenuIconClick?: any;
-	handleMenuIconClose?: any;
-	generateMentorTypeHandle?: any;
-}
+	const { data, loading, error, refetch } = useQuery(GET_NOTICES, {
+		variables: { input },
+		fetchPolicy: 'cache-and-network',
+	});
 
-export const FaqArticlesPanelList = (props: FaqArticlesPanelListType) => {
-	const {
-		dense,
-		membersData,
-		searchMembers,
-		anchorEl,
-		handleMenuIconClick,
-		handleMenuIconClose,
-		generateMentorTypeHandle,
-	} = props;
-	const router = useRouter();
+	const [changeStatus, { loading: statusLoading }] = useMutation(CHANGENOTICESTATUS, {
+		onCompleted: () => refetch(),
+	});
+	const [deleteNotice, { loading: deleteLoading }] = useMutation(DELETENOTICE, {
+		onCompleted: () => {
+			setSelected([]);
+			refetch();
+		},
+	});
 
-	/** APOLLO REQUESTS **/
-	/** LIFECYCLES **/
-	/** HANDLERS **/
+	const rows: Notice[] = data?.getNotices?.notices ?? [];
+	const totalCount = data?.getNotices?.totalCount ?? 0;
+
+	const allChecked = rows.length > 0 && selected.length === rows.length;
+	const someChecked = selected.length > 0 && selected.length < rows.length;
+
+	const toggleRow = (id: string) => {
+		setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+	};
+	const toggleAll = () => {
+		if (allChecked) setSelected([]);
+		else setSelected(rows.map((r) => r._id));
+	};
+
+	const doToggleStatus = async (row: Notice) => {
+		const next =
+			row.noticeStatus === NoticeStatus.ACTIVE
+				? NoticeStatus.HOLD
+				: row.noticeStatus === NoticeStatus.HOLD
+				? NoticeStatus.ACTIVE
+				: NoticeStatus.HOLD;
+		await changeStatus({ variables: { input: { _id: row._id, noticeStatus: next } } });
+	};
+
+	const doBulkDelete = async () => {
+		await Promise.all(selected.map((_id) => deleteNotice({ variables: { _id } })));
+	};
+
+	const doDelete = async (row: Notice) => {
+		await deleteNotice({ variables: { _id: row._id } });
+	};
 
 	return (
-		<Stack>
+		<div>
+			{/* Filters */}
+			<Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+				<Select size="small" value={status} onChange={(e) => setStatus(e.target.value as any)} sx={{ width: 160 }}>
+					<MenuItem value="ALL">All Status</MenuItem>
+					{Object.values(NoticeStatus).map((s) => (
+						<MenuItem key={s} value={s}>
+							{s}
+						</MenuItem>
+					))}
+				</Select>
+
+				<OutlinedInput
+					size="small"
+					value={text}
+					placeholder="Search FAQ title or content"
+					onChange={(e) => setText(e.target.value)}
+					sx={{ flex: 1 }}
+					onKeyDown={(e) => e.key === 'Enter' && refetch()}
+					endAdornment={
+						<>
+							{!!text && <CancelRoundedIcon sx={{ mr: 1, cursor: 'pointer' }} onClick={() => setText('')} />}
+							<InputAdornment position="end">
+								<IconButton onClick={() => refetch()}>
+									<SearchIcon />
+								</IconButton>
+							</InputAdornment>
+						</>
+					}
+				/>
+
+				{selected.length > 0 && (
+					<Button color="error" variant="outlined" onClick={doBulkDelete} disabled={deleteLoading}>
+						Delete Selected ({selected.length})
+					</Button>
+				)}
+			</Stack>
+
 			<TableContainer>
-				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
-					{/*@ts-ignore*/}
-					<EnhancedTableHead />
+				<Table size="small">
+					<TableHead>
+						<TableRow>
+							<TableCell padding="checkbox">
+								<Checkbox color="primary" checked={allChecked} indeterminate={someChecked} onChange={toggleAll} />
+							</TableCell>
+							<TableCell width={120}>Category</TableCell>
+							<TableCell>Title</TableCell>
+							<TableCell>Status</TableCell>
+							<TableCell width={180}>Created</TableCell>
+							<TableCell width={180}>Updated</TableCell>
+							<TableCell width={140} align="right">
+								Actions
+							</TableCell>
+						</TableRow>
+					</TableHead>
+
 					<TableBody>
-						{[1, 2, 3, 4, 5].map((ele: any, index: number) => {
-							const member_image = '/img/profile/defaultUser.svg';
+						{loading && (
+							<TableRow>
+								<TableCell colSpan={7}>Loading...</TableCell>
+							</TableRow>
+						)}
+						{error && (
+							<TableRow>
+								<TableCell colSpan={7}>
+									<Typography color="error">{error.message}</Typography>
+								</TableCell>
+							</TableRow>
+						)}
+						{!loading && !error && rows.length === 0 && (
+							<TableRow>
+								<TableCell colSpan={7}>No FAQs.</TableCell>
+							</TableRow>
+						)}
 
-							let status_class_name = '';
-
-							return (
-								<TableRow hover key={'member._id'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-									<TableCell align="left">mb id</TableCell>
-									<TableCell align="left">member.mb_full_name</TableCell>
-									<TableCell align="left" className={'name'}>
-										<Stack direction={'row'}>
-											<Link href={`/_admin/users/detail?mb_id=$'{member._id'}`}>
-												<div>
-													<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
-												</div>
-											</Link>
-											<Link href={`/_admin/users/detail?mb_id=${'member._id'}`}>
-												<div>member.mb_nick</div>
-											</Link>
-										</Stack>
-									</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
-									<TableCell align="center">
-										<Button onClick={(e: any) => handleMenuIconClick(e, index)} className={'badge success'}>
-											member.mb_type
-										</Button>
-
-										<Menu
-											className={'menu-modal'}
-											MenuListProps={{
-												'aria-labelledby': 'fade-button',
-											}}
-											anchorEl={anchorEl[index]}
-											open={Boolean(anchorEl[index])}
-											onClose={handleMenuIconClose}
-											TransitionComponent={Fade}
-											sx={{ p: 1 }}
-										>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'mentor', 'originate')}>
-												<Typography variant={'subtitle1'} component={'span'}>
-													MENTOR
-												</Typography>
-											</MenuItem>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'user', 'remove')}>
-												<Typography variant={'subtitle1'} component={'span'}>
-													USER
-												</Typography>
-											</MenuItem>
-										</Menu>
-									</TableCell>
-								</TableRow>
-							);
-						})}
+						{rows.map((row) => (
+							<TableRow key={row._id} hover>
+								<TableCell padding="checkbox">
+									<Checkbox color="primary" checked={selected.includes(row._id)} onChange={() => toggleRow(row._id)} />
+								</TableCell>
+								<TableCell>{row.noticeCategory}</TableCell>
+								<TableCell>
+									<Typography fontWeight={600}>{row.noticeTitle}</Typography>
+									<Typography variant="body2" color="text.secondary" noWrap>
+										{row.noticeContent}
+									</Typography>
+								</TableCell>
+								<TableCell>
+									<Chip size="small" label={row.noticeStatus} color={statusColor(row.noticeStatus) as any} />
+								</TableCell>
+								<TableCell>{new Date(row.createdAt).toLocaleString()}</TableCell>
+								<TableCell>{new Date(row.updatedAt).toLocaleString()}</TableCell>
+								<TableCell align="right">
+									<Tooltip title="Edit">
+										<IconButton onClick={() => onEdit?.(row)}>
+											<EditRounded />
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Toggle Active/Hold">
+										<IconButton onClick={() => doToggleStatus(row)} disabled={statusLoading}>
+											<PublishedWithChangesRounded />
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Delete (soft)">
+										<IconButton onClick={() => doDelete(row)} disabled={deleteLoading}>
+											<DeleteRounded />
+										</IconButton>
+									</Tooltip>
+								</TableCell>
+							</TableRow>
+						))}
 					</TableBody>
 				</Table>
 			</TableContainer>
-		</Stack>
+
+			<TablePagination
+				component="div"
+				rowsPerPageOptions={[20, 40, 60]}
+				count={totalCount}
+				rowsPerPage={limit}
+				page={page - 1}
+				onPageChange={(_event: unknown, p: number) => setPage(p + 1)}
+				onRowsPerPageChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+					setLimit(parseInt(e.target.value, 10));
+					setPage(1);
+				}}
+			/>
+		</div>
 	);
 };

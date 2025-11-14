@@ -34,7 +34,7 @@ const withLayoutMain = (Component: any) => {
 				<>
 					<Head>
 						<title>AvtoBaraka</title>
-						<meta name={'title'} content={`Nestar`} />
+						<meta name={'title'} content={`AvtoBaraka`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>

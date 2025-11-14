@@ -61,14 +61,14 @@ const TopProperties = (props: TopPropertiesProps) => {
 
 	if (device === 'mobile') {
 		return (
-			<Stack className={'top-properties'}>
+			<Stack className={'top-cars'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<span>Top cars</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
-							className={'top-property-swiper'}
+							className={'top-car-swiper'}
 							slidesPerView={'auto'}
 							centeredSlides={true}
 							spaceBetween={15}
@@ -76,7 +76,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 						>
 							{topProperties.map((property: Property) => {
 								return (
-									<SwiperSlide className={'top-property-slide'} key={property?._id}>
+									<SwiperSlide className={'top-car-slide'} key={property?._id}>
 										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
 									</SwiperSlide>
 								);
@@ -88,7 +88,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 		);
 	} else {
 		return (
-			<Stack className={'top-properties'}>
+			<Stack className={'top-cars'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
@@ -105,7 +105,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
-							className={'top-property-swiper'}
+							className={'top-car-swiper'}
 							slidesPerView={'auto'}
 							spaceBetween={15}
 							modules={[Autoplay, Navigation, Pagination]}
@@ -119,7 +119,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 						>
 							{topProperties.map((property: Property) => {
 								return (
-									<SwiperSlide className={'top-property-slide'} key={property?._id}>
+									<SwiperSlide className={'top-car-slide'} key={property?._id}>
 										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
 									</SwiperSlide>
 								);

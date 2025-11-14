@@ -4,6 +4,7 @@
 		width: 100%;
 		height: auto;
 		background: #fff;
+
 		.info-box {
 			display: flex;
 			justify-content: space-between;
@@ -215,6 +216,40 @@
 			.container {
 				flex-direction: column;
 
+				.info-box {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+
+					.left {
+						span {
+							color: #111827;
+							font-family: $font;
+							font-size: 32px;
+							font-weight: 700;
+							line-height: 1.2;
+						}
+					}
+
+					.right {
+						.pagination-box {
+							display: flex;
+							align-items: center;
+							gap: 8px;
+							cursor: pointer;
+							transition: $transition-fast;
+
+							&:hover {
+								transform: translateX(4px);
+								span {
+									color: #1e40af;
+								}
+							}
+						}
+					}
+				}
+
 				.car-filter-box {
 					margin-bottom: 30px;
 					.car-filter-boxes {
@@ -237,7 +272,7 @@
 								height: 2px;
 								bottom: -2px;
 								left: 0;
-								background-color: #405ff2;
+
 								transition: width 0.3s ease;
 							}
 							&.active::before {
@@ -275,7 +310,7 @@
 							display: flex;
 							padding: 10px 0;
 							.trend-car-card {
-								width: 320px;
+								width: 330px;
 								border-radius: 16px;
 								box-shadow: $shadow-light;
 								height: 100%;
@@ -351,7 +386,7 @@
 										margin-bottom: 4px;
 										overflow: hidden;
 										.car-title {
-											height: 44px;
+											height: 20px;
 											font-weight: bold;
 											font-size: 16px;
 											margin-bottom: 4px;
@@ -388,7 +423,7 @@
 										color: $text-muted;
 										margin-bottom: 8px;
 										font-size: 14px;
-										line-height: 1.4;
+										line-height: 1;
 										overflow: hidden;
 										text-overflow: ellipsis;
 										display: -webkit-box;
@@ -399,6 +434,7 @@
 									}
 
 									.car-features {
+										width: 210px;
 										display: flex;
 										justify-content: space-between;
 										border-top: 1px solid #eee;
@@ -419,7 +455,7 @@
 
 											.feature-text {
 												color: rgba(0, 0, 0, 0.6);
-												font-size: 13px;
+												font-size: 10px;
 											}
 										}
 									}
@@ -486,8 +522,8 @@
 		.popular-cars {
 			padding: 80px 0;
 			width: 100%;
+			height: 640px;
 			display: flex;
-			flex-direction: row;
 			background: $background-light;
 
 			.container {
@@ -499,6 +535,7 @@
 					align-items: center;
 					justify-content: space-between;
 					margin-bottom: 30px;
+					padding: 0px 15px;
 
 					.left {
 						span {
@@ -566,250 +603,250 @@
 							height: auto;
 							display: flex;
 							margin: 10px 0 10px 10px;
-						}
-					}
 
-					.popular-card-box {
-						margin-top: 10px;
-						position: relative;
-						width: 620px;
-						height: 240px;
-						display: flex;
-						flex-direction: row;
-						background: $background-white;
-						border-radius: 12px;
-						box-shadow: $shadow-light;
-						overflow: hidden;
-						transition: $transition-smooth;
-						border: 1px solid $border-light;
-
-						&:hover {
-							transform: translateY(-4px);
-							box-shadow: $shadow-medium;
-							border-color: $primary-color;
-
-							.card-img {
-								&::after {
-									opacity: 0.2;
-								}
-							}
-						}
-
-						.card-img {
-							position: relative;
-							width: 40%;
-							height: 100%;
-							background-size: cover;
-							background-position: center;
-							cursor: pointer;
-
-							&::after {
-								content: '';
-								position: absolute;
-								top: 0;
-								left: 0;
-								right: 0;
-								bottom: 0;
-								background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
-								opacity: 0.3;
-								transition: opacity 0.3s ease;
-							}
-
-							div.status {
-								position: absolute;
-								padding: 6px 12px;
-								left: 16px;
-								top: 16px;
+							.popular-card-box {
+								margin-top: 10px;
+								position: relative;
+								width: 620px;
+								height: 240px;
 								display: flex;
-								align-items: center;
-								border-radius: 6px;
-								background: rgba(235, 103, 83, 0.9);
-								z-index: 1;
-
-								img {
-									width: 12px;
-									height: 12px;
-									filter: brightness(0) invert(1);
-								}
-
-								span {
-									margin-left: 4px;
-									color: #ffffff;
-									font-size: 11px;
-									font-weight: 600;
-									text-transform: uppercase;
-									letter-spacing: 0.5px;
-								}
-							}
-
-							div.price {
-								position: absolute;
-								padding: 6px 12px;
-								left: 16px;
-								bottom: 16px;
-								border-radius: 6px;
-								background: rgba(255, 255, 255, 0.95);
-								color: #1a1a1a;
-								font-size: 15px;
-								font-weight: 600;
-								z-index: 1;
-								box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-							}
-						}
-
-						.info {
-							padding: 20px;
-							width: 60%;
-							display: flex;
-							flex-direction: column;
-							box-sizing: border-box;
-
-							.title {
-								color: #1a1a1a;
-								font-size: 16px;
-								font-weight: 600;
-								line-height: 1.4;
-								margin-bottom: 8px;
-								cursor: pointer;
-								transition: color 0.2s ease;
+								flex-direction: row;
+								background: $background-white;
+								border-radius: 12px;
+								box-shadow: $shadow-light;
 								overflow: hidden;
-								text-overflow: ellipsis;
-								display: -webkit-box;
-								line-clamp: 2;
-								-webkit-line-clamp: 2;
-								-webkit-box-orient: vertical;
+								transition: $transition-smooth;
+								border: 1px solid $border-light;
 
 								&:hover {
-									color: $primary-color;
+									transform: translateY(-4px);
+									box-shadow: $shadow-medium;
+									border-color: $primary-color;
+
+									.card-img {
+										&::after {
+											opacity: 0.2;
+										}
+									}
 								}
-							}
 
-							.car-desc {
-								color: #666;
-								font-size: 13px;
-								font-weight: 400;
-								line-height: 1.5;
-								margin-bottom: 12px;
-								display: -webkit-box;
-								line-clamp: 2;
-								-webkit-line-clamp: 2;
-								-webkit-box-orient: vertical;
-								overflow: hidden;
-							}
+								.card-img {
+									position: relative;
+									width: 40%;
+									height: 100%;
+									background-size: cover;
+									background-position: center;
+									cursor: pointer;
 
-							.car-specs {
-								display: flex;
-								justify-content: space-between;
-								margin: 8px -4px 16px;
+									&::after {
+										content: '';
+										position: absolute;
+										top: 0;
+										left: 0;
+										right: 0;
+										bottom: 0;
+										background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+										opacity: 0.3;
+										transition: opacity 0.3s ease;
+									}
 
-								.spec-item {
-									flex: 1;
-									margin: 0 4px;
-									padding: 10px;
-									background: #f8f9fa;
-									border-radius: 10px;
-									border: 1px solid transparent;
-									transition: all 0.2s ease;
-									cursor: help;
-									display: flex;
-									flex-direction: column;
-									align-items: center;
-									text-align: center;
+									div.status {
+										position: absolute;
+										padding: 6px 12px;
+										left: 16px;
+										top: 16px;
+										display: flex;
+										align-items: center;
+										border-radius: 6px;
+										background: rgba(235, 103, 83, 0.9);
+										z-index: 1;
 
-									&:hover {
-										background: #fff;
-										border-color: rgba(64, 95, 242, 0.1);
-										box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+										img {
+											width: 12px;
+											height: 12px;
+											filter: brightness(0) invert(1);
+										}
 
-										.spec-icon {
-											color: $primary-color;
-											transform: translateY(-2px);
+										span {
+											margin-left: 4px;
+											color: #ffffff;
+											font-size: 11px;
+											font-weight: 600;
+											text-transform: uppercase;
+											letter-spacing: 0.5px;
 										}
 									}
 
-									.spec-icon {
-										width: 18px;
-										height: 18px;
-										color: #666;
-										margin-bottom: 6px;
-										transition: all 0.2s ease;
-									}
-
-									span {
+									div.price {
+										position: absolute;
+										padding: 6px 12px;
+										left: 16px;
+										bottom: 16px;
+										border-radius: 6px;
+										background: rgba(255, 255, 255, 0.95);
 										color: #1a1a1a;
-										font-size: 12px;
-										font-weight: 500;
-										white-space: nowrap;
+										font-size: 15px;
+										font-weight: 600;
+										z-index: 1;
+										box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+									}
+								}
+
+								.info {
+									padding: 20px;
+									width: 60%;
+									display: flex;
+									flex-direction: column;
+									box-sizing: border-box;
+
+									.title {
+										color: #1a1a1a;
+										font-size: 16px;
+										font-weight: 600;
+										line-height: 1.4;
+										margin-bottom: 8px;
+										cursor: pointer;
+										transition: color 0.2s ease;
 										overflow: hidden;
 										text-overflow: ellipsis;
-										max-width: 100%;
-									}
-								}
-							}
-
-							.bottom-section {
-								margin-top: auto;
-								display: flex;
-								justify-content: space-between;
-								align-items: center;
-								padding-top: 12px;
-								border-top: 1px solid #eee;
-
-								.brand-model-box {
-									display: flex;
-									flex-direction: column;
-									gap: 2px;
-
-									span {
-										color: #666;
-										font-size: 12px;
-										font-weight: 500;
-
-										&:first-child {
-											color: #1a1a1a;
-										}
-									}
-								}
-
-								.view-like-box {
-									display: flex;
-									align-items: center;
-									gap: 12px;
-
-									.MuiIconButton-root {
-										padding: 4px;
-										color: #666;
-										font-size: 20px;
+										display: -webkit-box;
+										line-clamp: 2;
+										-webkit-line-clamp: 2;
+										-webkit-box-orient: vertical;
 
 										&:hover {
 											color: $primary-color;
 										}
 									}
 
-									.view-cnt {
-										font-size: 12px;
+									.car-desc {
 										color: #666;
-										margin-left: -8px;
+										font-size: 13px;
+										font-weight: 400;
+										line-height: 1.5;
+										margin-bottom: 12px;
+										display: -webkit-box;
+										line-clamp: 2;
+										-webkit-line-clamp: 2;
+										-webkit-box-orient: vertical;
+										overflow: hidden;
+									}
+
+									.car-specs {
+										display: flex;
+										justify-content: space-between;
+										margin: 8px -4px 16px;
+
+										.spec-item {
+											flex: 1;
+											margin: 0 4px;
+											padding: 10px;
+											background: #f8f9fa;
+											border-radius: 10px;
+											border: 1px solid transparent;
+											transition: all 0.2s ease;
+											cursor: help;
+											display: flex;
+											flex-direction: column;
+											align-items: center;
+											text-align: center;
+
+											&:hover {
+												background: #fff;
+												border-color: rgba(64, 95, 242, 0.1);
+												box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+												.spec-icon {
+													color: $primary-color;
+													transform: translateY(-2px);
+												}
+											}
+
+											.spec-icon {
+												width: 18px;
+												height: 18px;
+												color: #666;
+												margin-bottom: 6px;
+												transition: all 0.2s ease;
+											}
+
+											span {
+												color: #1a1a1a;
+												font-size: 12px;
+												font-weight: 500;
+												white-space: nowrap;
+												overflow: hidden;
+												text-overflow: ellipsis;
+												max-width: 100%;
+											}
+										}
+									}
+
+									.bottom-section {
+										margin-top: auto;
+										display: flex;
+										justify-content: space-between;
+										align-items: center;
+										padding-top: 12px;
+										border-top: 1px solid #eee;
+
+										.brand-model-box {
+											display: flex;
+											flex-direction: column;
+											gap: 2px;
+
+											span {
+												color: #666;
+												font-size: 12px;
+												font-weight: 500;
+
+												&:first-child {
+													color: #1a1a1a;
+												}
+											}
+										}
+
+										.view-like-box {
+											display: flex;
+											align-items: center;
+											gap: 12px;
+
+											.MuiIconButton-root {
+												padding: 4px;
+												color: #666;
+												font-size: 20px;
+
+												&:hover {
+													color: $primary-color;
+												}
+											}
+
+											.view-cnt {
+												font-size: 12px;
+												color: #666;
+												margin-left: -8px;
+											}
+										}
 									}
 								}
-							}
-						}
 
-						// Mobile styles
-						@media (max-width: 768px) {
-							width: 100%;
-							max-width: 400px;
-							height: auto;
-							flex-direction: column;
+								// Mobile styles
+								@media (max-width: 768px) {
+									width: 100%;
+									max-width: 400px;
+									height: auto;
+									flex-direction: column;
 
-							.card-img {
-								width: 100%;
-								height: 180px;
-							}
+									.card-img {
+										width: 100%;
+										height: 180px;
+									}
 
-							.info {
-								width: 100%;
-								padding: 16px;
+									.info {
+										width: 100%;
+										padding: 16px;
+									}
+								}
 							}
 						}
 					}
@@ -858,6 +895,169 @@
 						}
 						svg {
 							font-size: 1rem;
+						}
+					}
+				}
+			}
+		}
+
+		.top-cars {
+			width: 100%;
+			height: 550px;
+			padding: 80px 0;
+			display: flex;
+			flex-direction: row;
+			background: $background-white;
+			.container {
+				flex-direction: column;
+				.card-box {
+					position: relative;
+					display: flex;
+					flex-direction: row;
+
+					.top-car-swiper {
+						width: 100%;
+						height: 400px;
+						display: flex;
+						flex-direction: row;
+						.top-car-slide {
+							width: auto;
+							height: auto;
+							display: flex;
+							margin: 10px 0 0 10px;
+						}
+					}
+					.top-card-box {
+						position: relative;
+						width: 300px;
+						height: 375px;
+						display: flex;
+						flex-direction: column;
+						transition: transform 0.3s;
+						&:hover {
+							opacity: 1;
+							transform: scale(1.05);
+						}
+						.card-img {
+							position: relative;
+							width: 100%;
+							height: 203px;
+							background-size: cover;
+							border-radius: 12px 12px 0px 0px;
+							cursor: pointer;
+							div {
+								position: absolute;
+								padding: 8px 12px;
+								left: 12px;
+								bottom: 12px;
+								border-radius: 6px;
+								background: #fff;
+								color: #181a20;
+								font-family: $font;
+								font-size: 15px;
+								font-style: normal;
+								font-weight: 600;
+								line-height: normal;
+							}
+						}
+						.info {
+							padding: 20px 22px 17px;
+							display: flex;
+							flex-direction: column;
+							box-sizing: border-box;
+							border-radius: 0px 0px 12px 12px;
+							border: 1px solid rgba(196, 196, 196, 0.71);
+							border-top: none;
+							background: #fff;
+							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+							.title {
+								overflow: hidden;
+								color: #181a20;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								font-family: $font;
+								font-size: 15px;
+								font-style: normal;
+								font-weight: 600;
+								line-height: normal;
+								text-transform: capitalize;
+								cursor: pointer;
+							}
+							.desc {
+								margin-top: 5px;
+								overflow: hidden;
+								color: #717171;
+								font-family: $font;
+								font-size: 13px;
+								font-style: normal;
+								font-weight: 400;
+								line-height: normal;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+							}
+							.options {
+								margin-top: 15px;
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+
+								div {
+									display: flex;
+									flex-direction: row;
+									justify-content: space-between;
+									align-items: center;
+									gap: 5px;
+									img {
+										margin-right: 5px;
+										width: 17px;
+										height: 17px;
+									}
+									span {
+										color: #181a20;
+										font-family: $font;
+										font-size: 12px;
+										font-style: normal;
+										font-weight: 300;
+										line-height: normal;
+									}
+								}
+							}
+							.bott {
+								display: flex;
+								flex-direction: row;
+								justify-content: space-between;
+								align-items: center;
+								p {
+									color: #181a20;
+									font-family: $font;
+									font-size: 13px;
+									font-style: normal;
+									font-weight: 400;
+									line-height: normal;
+									text-transform: capitalize;
+								}
+								button {
+									margin-left: 7px;
+									width: 16px;
+									height: 16px;
+									box-sizing: border-box;
+								}
+								.view-like-box {
+									display: flex;
+									flex-direction: row;
+									gap: 7px;
+									align-items: center;
+									.view-cnt {
+										color: #717171;
+										font-family: $font;
+										font-size: 13px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: normal;
+										text-overflow: ellipsis;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -978,7 +1178,7 @@
 							transition: all 0.3s ease;
 							&:hover {
 								box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-								border-color: #1e40af;
+								border-color: $primary-color;
 								transform: translateY(-5px);
 								.agent-header img {
 									transform: scale(1.05);
@@ -1179,7 +1379,7 @@
 
 				.community-main {
 					display: grid;
-					grid-template-columns: repeat(3, 1fr);
+					grid-template-columns: repeat(4, 1fr);
 					gap: 16px;
 					width: 100%;
 
@@ -1459,17 +1659,18 @@
 	position: relative;
 	width: 700px;
 	height: auto;
-	padding: 32px;
+	padding: 25px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	background: $background-white;
 	border-radius: $border-radius-medium;
 	box-shadow: $shadow-medium;
 	// Close button
 	.close {
 		position: absolute;
-		top: 16px;
+		top: 25px;
 		right: 16px;
 		width: 32px;
 		height: 32px;
@@ -1561,7 +1762,7 @@
 			height: auto;
 			display: flex;
 			justify-content: space-between;
-			gap: 16px;
+			gap: 14px;
 
 			.box {
 				position: relative;
@@ -1589,7 +1790,7 @@
 					align-items: center;
 					justify-content: flex-end;
 					flex-direction: row-reverse;
-					padding: 10px 16px;
+					padding: 6px 8px;
 					border-radius: 8px;
 					transition: $transition-smooth;
 					background: $background-light;
@@ -1736,7 +1937,7 @@
 
 		.search-btn {
 			height: auto;
-			padding: 16px 8px;
+			padding: 12px 10px;
 			border-radius: 60px;
 			background: $primary-color;
 			color: $background-white;

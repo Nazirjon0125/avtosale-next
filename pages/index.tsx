@@ -7,7 +7,7 @@ import TopAgents from '../libs/components/homepage/TopAgents';
 
 import TopProperties from '../libs/components/homepage/TopCar';
 import { Stack } from '@mui/material';
-import Advertisement from '../libs/components/homepage/Advertisement';
+
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import TrendProperties from '../libs/components/homepage/TrendCar';
 import PopularCars from '../libs/components/homepage/PopularCar';
@@ -27,7 +27,7 @@ const Home: NextPage = () => {
 			<Stack className={'home-page'}>
 				<TrendProperties />
 				<PopularCar />
-				<Advertisement />
+
 				<TopProperties />
 				<TopAgents />
 			</Stack>
@@ -37,7 +37,7 @@ const Home: NextPage = () => {
 			<Stack className={'home-page'}>
 				<TrendProperties />
 				<PopularCar />
-				<Advertisement />
+
 				<TopProperties />
 				<TopAgents />
 				<CommunityBoards />

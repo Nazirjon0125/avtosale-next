@@ -60,7 +60,9 @@ export const UPDATE_PROPERTY_BY_ADMIN = gql`
 			lincolnModel
 			volvoModel
 			propertyFuel
+			propertyCarOptions
 			propertyCarBody
+			propertyTransmission
 			propertyStatus
 			propertyLocation
 			propertyAddress
@@ -107,6 +109,7 @@ export const REMOVE_PROPERTY_BY_ADMIN = gql`
 			volvoModel
 			propertyFuel
 			propertyCarBody
+			propertyTransmission
 			propertyStatus
 			propertyLocation
 			propertyAddress
@@ -186,6 +189,68 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 			commentContent
 			commentRefId
 			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const CREATENOTICE = gql`
+	mutation CreateNotice($input: CreateNoticeInput!) {
+		createNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const UPDATENOTICE = gql`
+	mutation UpdateNotice($input: UpdateNoticeInput!) {
+		updateNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+export const CHANGENOTICESTATUS = gql`
+	mutation ChangeNoticeStatus($input: ChangeNoticeStatusInput!) {
+		changeNoticeStatus(input: $input) {
+			_id
+			noticeStatus
+		}
+	}
+`;
+
+export const DELETENOTICE = gql`
+	mutation DeleteNotice($_id: String!) {
+		deleteNotice(_id: $_id)
+	}
+`;
+
+export const CREATENOTIFICATION = gql`
+	mutation CreateWelcomeNotification {
+		createWelcomeNotification {
+			_id
+			notificationType
+			notificationStatus
+			notificationGroup
+			notificationTitle
+			notificationDesc
+			authorId
+			receiverId
+			propertyId
+			articleId
 			createdAt
 			updatedAt
 		}

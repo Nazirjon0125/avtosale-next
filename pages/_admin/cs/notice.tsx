@@ -99,13 +99,13 @@ const AdminNotice: NextPage = (props: any) => {
 							<Divider />
 						</Box>
 						<NoticeList
-							// dense={dense}
-							// membersData={membersData}
-							// searchMembers={searchMembers}
-							anchorEl={anchorEl}
-							// handleMenuIconClick={handleMenuIconClick}
-							// handleMenuIconClose={handleMenuIconClose}
-							// generateMentorTypeHandle={generateMentorTypeHandle}
+						// dense={dense}
+						// membersData={membersData}
+						// searchMembers={searchMembers}
+						// anchorEl={anchorEl}
+						// handleMenuIconClick={handleMenuIconClick}
+						// handleMenuIconClose={handleMenuIconClose}
+						// generateMentorTypeHandle={generateMentorTypeHandle}
 						/>
 
 						<TablePagination

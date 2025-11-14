@@ -9,6 +9,9 @@ import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
+import SpeedIcon from '@mui/icons-material/Speed';
 
 interface TopPropertyCardProps {
 	property: Property;
@@ -100,15 +103,15 @@ const TopPropertyCard = (props: TopPropertyCardProps) => {
 					<p className={'desc'}>{property?.propertyAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyCarBody} CAR TYPE</span>
+							<DriveEtaIcon className={'img'} />
+							<span>{property?.propertyCarBody} </span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyFuel} FUEL</span>
+							<LocalGasStationIcon className={'img'} />
+							<span>{property?.propertyFuel} </span>
 						</div>
 						<div>
-							<img src="/img/icons/expand.svg" alt="" />
+							<SpeedIcon />
 							<span>{property?.propertyMile} km</span>
 						</div>
 					</div>

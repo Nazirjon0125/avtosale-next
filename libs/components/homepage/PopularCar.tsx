@@ -51,7 +51,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 			<Stack className={'popular-cars'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Popular properties</span>
+						<span>Popular Cars</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
@@ -75,11 +75,11 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 		);
 	} else {
 		return (
-			<Stack className={'popular-properties'}>
+			<Stack className={'popular-cars'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Popular properties</span>
+							<span>Popular Cars</span>
 							<p>Popularity is based on views</p>
 						</Box>
 						<Box component={'div'} className={'right'}>
@@ -128,7 +128,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 PopularProperties.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 7,
+		limit: 20,
 		sort: 'propertyViews',
 		direction: 'DESC',
 		search: {},

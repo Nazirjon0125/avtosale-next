@@ -1,48 +1,23 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Avatar, Box, Stack } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import Badge from '@mui/material/Badge';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import { useRouter } from 'next/router';
 import ScrollableFeed from 'react-scrollable-feed';
 import { RippleBadge } from '../../scss/MaterialTheme/styled';
+import { Member } from '../types/member/member';
 import { useReactiveVar } from '@apollo/client';
 import { socketVar, userVar } from '../../apollo/store';
-import { Member } from '../types/member/member';
+import { Messages, REACT_APP_API_URL } from '../config';
 import { sweetErrorAlert } from '../sweetAlert';
-import { Messages } from '../config';
-
-const NewMessage = (type: any) => {
-	if (type === 'right') {
-		return (
-			<Box
-				component={'div'}
-				flexDirection={'row'}
-				style={{ display: 'flex' }}
-				alignItems={'flex-end'}
-				justifyContent={'flex-end'}
-				sx={{ m: '10px 0px' }}
-			>
-				<div className={'msg_right'}></div>
-			</Box>
-		);
-	} else {
-		return (
-			<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
-				<Avatar alt={'jonik'} src={'/img/profile/defaultUser.svg'} />
-				<div className={'msg_left'}></div>
-			</Box>
-		);
-	}
-};
+import { useTranslation } from 'next-i18next';
 
 interface MessagePayload {
 	event: string;
 	text: string;
 	memberData: Member;
 }
-
 interface InfoPayload {
 	event: string;
 	totalClients: number;
@@ -51,6 +26,7 @@ interface InfoPayload {
 }
 
 const Chat = () => {
+	const { t } = useTranslation('common');
 	const chatContentRef = useRef<HTMLDivElement>(null);
 	const [messagesList, setMessagesList] = useState<MessagePayload[]>([]);
 	const [onlineUsers, setOnlineUsers] = useState<number>(0);
@@ -61,65 +37,40 @@ const Chat = () => {
 	const user = useReactiveVar(userVar);
 	const socket = useReactiveVar(socketVar);
 
-	/** LIFECYCLES **/
-
 	useEffect(() => {
 		socket.onmessage = (msg) => {
 			const data = JSON.parse(msg.data);
-			console.log('WebSocket message:', data);
-
 			switch (data.event) {
 				case 'info':
-					const newInfo: InfoPayload = data;
-					setOnlineUsers(newInfo.totalClients);
+					setOnlineUsers((data as InfoPayload).totalClients);
 					break;
 				case 'getMessages':
-					const list: MessagePayload[] = data.list;
-					setMessagesList(list);
+					setMessagesList(data.list as MessagePayload[]);
 					break;
 				case 'message':
-					const newMessage: MessagePayload = data;
-					messagesList.push(newMessage);
-					setMessagesList([...messagesList]);
-					break;
-				default:
+					setMessagesList((prev) => [...prev, data as MessagePayload]);
 					break;
 			}
 		};
-	}, [socket, messagesList]);
+	}, [socket]);
 
 	useEffect(() => {
-		const timeoutId = setTimeout(() => {
-			setOpenButton(true);
-		}, 100);
+		const timeoutId = setTimeout(() => setOpenButton(true), 100);
 		return () => clearTimeout(timeoutId);
 	}, []);
 
-	useEffect(() => {
-		setOpenButton(false);
-	}, [router.pathname]);
+	useEffect(() => setOpenButton(false), [router.pathname]);
 
-	/** HANDLERS **/
-	const handleOpenChat = () => {
-		setOpen((prevState) => !prevState);
-	};
+	const handleOpenChat = () => setOpen((prev) => !prev);
 
-	const getInputMessageHandler = useCallback(
-		(e: any) => {
-			const text = e.target.value;
-			setMessageInput(text);
-		},
-		[messageInput],
-	);
+	const getInputMessageHandler = useCallback((e: any) => {
+		setMessageInput(e.target.value);
+	}, []);
 
 	const getKeyHandler = (e: any) => {
 		try {
-			if (e.key == 'Enter') {
-				onClickHandler();
-			}
-		} catch (err: any) {
-			console.log(err);
-		}
+			if (e.key === 'Enter') onClickHandler();
+		} catch {}
 	};
 
 	const onClickHandler = () => {
@@ -137,55 +88,52 @@ const Chat = () => {
 					{open ? <CloseFullscreenIcon /> : <MarkChatUnreadIcon />}
 				</button>
 			) : null}
+
 			<Stack className={`chat-frame ${open ? 'open' : ''}`}>
-				<Box className={'chat-top'} component={'div'}>
-					<div style={{ fontFamily: 'Nunito' }}>Online Chat</div>
+				<Box className="chat-top" component="div">
+					<div style={{ fontFamily: 'Nunito' }}>{t('Online Chat')}</div>
 					<RippleBadge style={{ margin: '-18px 0 0 21px' }} badgeContent={onlineUsers} />
 				</Box>
-				<Box className={'chat-content'} id="chat-content" ref={chatContentRef} component={'div'}>
+
+				<Box className="chat-content" id="chat-content" ref={chatContentRef} component="div">
 					<ScrollableFeed>
-						<Stack className={'chat-main'}>
-							<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
-								<div className={'welcome'}>Welcome to Live chat!</div>
+						<Stack className="chat-main">
+							<Box component="div" sx={{ m: '10px 0px' }}>
+								<div className="welcome">{t('Welcome to Live chat!')}</div>
 							</Box>
-							{messagesList.map((ele: MessagePayload) => {
+
+							{messagesList.map((ele: MessagePayload, idx) => {
 								const { text, memberData } = ele;
 								const memberImage = memberData?.memberImage
-									? `${process.env.REACT_APP_API_URL}/${memberData.memberImage}`
+									? `${REACT_APP_API_URL}/${memberData.memberImage}`
 									: '/img/profile/defaultUser.svg';
 
 								return memberData?._id === user?._id ? (
-									<Box
-										component={'div'}
-										flexDirection={'row'}
-										style={{ display: 'flex' }}
-										alignItems={'flex-end'}
-										justifyContent={'flex-end'}
-										sx={{ m: '10px 0px' }}
-									>
-										<div className={'msg-right'}>{text}</div>
+									<Box key={idx} component="div" sx={{ m: '10px 0px', display: 'flex' }} justifyContent="flex-end">
+										<div className="msg-right">{text}</div>
 									</Box>
 								) : (
-									<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
-										<Avatar alt={'jonik'} src={memberImage} />
-										<div className={'msg-left'}>{text}</div>
+									<Box key={idx} component="div" sx={{ m: '10px 0px', display: 'flex' }}>
+										<Avatar alt="member" src={memberImage} />
+										<div className="msg-left">{text}</div>
 									</Box>
 								);
 							})}
 						</Stack>
 					</ScrollableFeed>
 				</Box>
-				<Box className={'chat-bott'} component={'div'}>
+
+				<Box className="chat-bott" component="div">
 					<input
-						type={'text'}
-						name={'message'}
-						className={'msg-input'}
-						placeholder={'Type message'}
+						type="text"
+						name="message"
+						className="msg-input"
+						placeholder={t('Type message') as string}
 						value={messageInput}
 						onChange={getInputMessageHandler}
 						onKeyDown={getKeyHandler}
 					/>
-					<button className={'send-msg-btn'} onClick={onClickHandler}>
+					<button className="send-msg-btn" onClick={onClickHandler}>
 						<SendIcon style={{ color: '#fff' }} />
 					</button>
 				</Box>

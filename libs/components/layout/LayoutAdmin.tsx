@@ -18,6 +18,8 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
 import { MemberType } from '../../enums/member.enum';
+import { useTranslation } from 'next-i18next';
+
 const drawerWidth = 280;
 
 const withAdminLayout = (Component: ComponentType) => {
@@ -30,8 +32,8 @@ const withAdminLayout = (Component: ComponentType) => {
 		const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 		const [title, setTitle] = useState('admin');
 		const [loading, setLoading] = useState(true);
+		const { t } = useTranslation('common');
 
-		/** LIFECYCLES **/
 		useEffect(() => {
 			const jwt = getJwtToken();
 			if (jwt) updateUserInfo(jwt);
@@ -44,7 +46,6 @@ const withAdminLayout = (Component: ComponentType) => {
 			}
 		}, [loading, user, router]);
 
-		/** HANDLERS **/
 		const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 			setAnchorElUser(event.currentTarget);
 		};
@@ -73,7 +74,7 @@ const withAdminLayout = (Component: ComponentType) => {
 						}}
 					>
 						<Toolbar>
-							<Tooltip title="Open settings">
+							<Tooltip title={t('openSettings')}>
 								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 									<Avatar
 										src={
@@ -87,25 +88,13 @@ const withAdminLayout = (Component: ComponentType) => {
 								id="menu-appbar"
 								className={'pop-menu'}
 								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
+								anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
 								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
+								transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 								open={Boolean(anchorElUser)}
 								onClose={handleCloseUserMenu}
 							>
-								<Box
-									component={'div'}
-									onClick={handleCloseUserMenu}
-									sx={{
-										width: '200px',
-									}}
-								>
+								<Box component={'div'} onClick={handleCloseUserMenu} sx={{ width: '200px' }}>
 									<Stack sx={{ px: '20px', my: '12px' }}>
 										<Typography variant={'h6'} component={'h6'} sx={{ mb: '4px' }}>
 											{user?.memberNick}
@@ -118,7 +107,7 @@ const withAdminLayout = (Component: ComponentType) => {
 									<Box component={'div'} sx={{ p: 1, py: '6px' }} onClick={logoutHandler}>
 										<MenuItem sx={{ px: '16px', py: '6px' }}>
 											<Typography variant={'subtitle1'} component={'span'}>
-												Logout
+												{t('Logout')}
 											</Typography>
 										</MenuItem>
 									</Box>
@@ -131,10 +120,7 @@ const withAdminLayout = (Component: ComponentType) => {
 						sx={{
 							width: drawerWidth,
 							flexShrink: 0,
-							'& .MuiDrawer-paper': {
-								width: drawerWidth,
-								boxSizing: 'border-box',
-							},
+							'& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
 						}}
 						variant="permanent"
 						anchor="left"
@@ -142,7 +128,7 @@ const withAdminLayout = (Component: ComponentType) => {
 					>
 						<Toolbar sx={{ flexDirection: 'column', alignItems: 'flexStart' }}>
 							<Stack className={'logo-box'}>
-								<img src={'/img/logo/logoText.svg'} alt={'logo'} />
+								<img src={'/img/logo/avtobaraka01.png'} alt={'logo'} />
 							</Stack>
 
 							<Stack
@@ -167,7 +153,6 @@ const withAdminLayout = (Component: ComponentType) => {
 						</Toolbar>
 
 						<Divider />
-
 						<MenuList />
 					</Drawer>
 

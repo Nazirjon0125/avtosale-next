@@ -39,7 +39,9 @@ import {
 } from '../../enums/property.enum';
 import { PriceRange, PropertiesInquiry } from '../../types/property/property.input';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { carMileage, carPrice, REACT_APP_API_URL } from '../../config';
+import { carMileage, carPrice, carYears, REACT_APP_API_URL } from '../../config';
+
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 // Brand va model mappingni enum asosida hosil qilamiz
 const BrandModelsMap: Record<PropertyCarType, string[]> = {
@@ -48,13 +50,13 @@ const BrandModelsMap: Record<PropertyCarType, string[]> = {
 	[PropertyCarType.HYUNDAI]: Object.values(HyundaiModel),
 	[PropertyCarType.AUDI]: Object.values(AudiModel),
 	[PropertyCarType.MERCEDES]: Object.values(MercedesModel),
-	[PropertyCarType.TAYOTA]: Object.values(ToyotaModel),
+	[PropertyCarType.TOYOTA]: Object.values(ToyotaModel),
 	[PropertyCarType.TESLA]: Object.values(TeslaModel),
 	[PropertyCarType.CHEVROLET]: Object.values(ChevroletModel),
 	[PropertyCarType.JEEP]: Object.values(JeepModel),
 	[PropertyCarType.HONDA]: Object.values(HondaModel),
 	[PropertyCarType.LAND_ROVER]: Object.values(LandRoverModel),
-	[PropertyCarType.LEXSUS]: Object.values(LexusModel),
+	[PropertyCarType.LEXUS]: Object.values(LexusModel),
 	[PropertyCarType.LINCOLN]: Object.values(LincolnModel),
 	[PropertyCarType.VOLVO]: Object.values(VolvoModel),
 };
@@ -352,16 +354,16 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 		return (
 			<Stack className={'search-box'}>
 				<Stack className={'select-box'}>
-					<Box className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler}>
-						<span>{searchFilter?.search?.locationList?.[0] ?? t('Location')}</span>
-						<ExpandMoreIcon />
-					</Box>
 					<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
 						<span>{searchFilter?.search?.typeList?.[0] ?? t('Car Brand')}</span>
 						<ExpandMoreIcon />
 					</Box>
 					<Box className={`box ${openModel ? 'on' : ''}`} onClick={modelStateChangeHandler}>
 						<span>{searchFilter?.search?.modelList?.[0] ?? t('Model')}</span>
+						<ExpandMoreIcon />
+					</Box>
+					<Box className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler}>
+						<span>{searchFilter?.search?.locationList?.[0] ?? t('Location')}</span>
 						<ExpandMoreIcon />
 					</Box>
 				</Stack>
@@ -375,24 +377,16 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 						<p>{t('Search Cars')}</p>
 					</Box>
 				</Stack>
-				{/* Location Menu */}
-				<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
-					{propertyLocation.map((location) => (
-						<div key={location} onClick={() => propertyLocationSelectHandler(location)}>
-							<img src={`img/banner/cities/${location}.webp`} alt="" />
-							<span>{location}</span>
-						</div>
-					))}
-				</div>
+
 				{/* Type Menu */}
 				<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
 					{propertyType.map((type) => (
 						<div
 							key={type}
-							style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.webp)` }}
+							style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.svg)` }}
 							onClick={() => propertyTypeSelectHandler(type)}
 						>
-							<img src={`img/banner/car/${type}.webp`} alt="" />
+							<img src={`img/banner/car/${type}.svg`} alt="" />
 							<span>{type}</span>
 						</div>
 					))}
@@ -406,6 +400,15 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 						</div>
 					))}
 				</div>
+				{/* Location Menu */}
+				<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
+					{propertyLocation.map((location) => (
+						<div key={location} onClick={() => propertyLocationSelectHandler(location)}>
+							<img src={`img/banner/cities/${location}.webp`} alt="" />
+							<span>{location}</span>
+						</div>
+					))}
+				</div>
 				{/* Advanced Filter Modal */}
 				<Modal
 					open={openAdvancedFilter}
@@ -413,10 +416,11 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 				>
+					{/* @ts-ignore */}
 					<Box sx={style}>
 						<Box className={'advanced-filter-modal'}>
 							<div className={'close'} onClick={() => advancedFilterHandler(false)}>
-								<CloseIcon />
+								<CancelRoundedIcon />
 							</div>
 							<div className={'top'}>
 								<div className={'search-input-box'}>
@@ -434,112 +438,125 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 									/>
 								</div>
 							</div>
-							<Divider />
 
 							<div className={'middle'}>
-								{/* carBody */}
-								<div className={'row-box1'}>
-									<span>CAR BODY</span>
-									<Stack className={'box'}>
-										{propertyCarBody.map((carBody) => (
-											<Stack key={carBody} className={'input-box'} flexDirection="row">
-												<label htmlFor={carBody} style={{ cursor: 'pointer' }}>
-													<Typography>{carBody}</Typography>
-												</label>
-												<Checkbox
-													id={carBody}
-													value={carBody}
-													checked={(searchFilter.search.carBodyList || []).includes(carBody)}
-													onChange={carBodyTypeSelectHandler}
-												/>
-											</Stack>
-										))}
-									</Stack>
-								</div>
 								<div className={'row-box'}>
-									{/* Fuel Type */}
 									<div className={'box'}>
-										<span>Car Fuel</span>
-										{propertyFuel.map((fuel) => (
-											<Stack key={fuel} className={'input-box'} flexDirection="row">
-												<label htmlFor={fuel} style={{ cursor: 'pointer' }}>
-													<Typography>{fuel}</Typography>
+										<span>Car Type</span>
+										{propertyCarBody.map((type: string) => (
+											<Stack
+												className={'input-box'}
+												key={type}
+												flexDirection={'row'}
+												width={'100%'}
+												alignItems={'center'}
+												gap={'4px'}
+											>
+												<label style={{ cursor: 'pointer' }} htmlFor={type}>
+													<Typography className="property-type">{type}</Typography>
 												</label>
 												<Checkbox
-													id={fuel}
-													value={fuel}
-													checked={(searchFilter.search.fuelList || []).includes(fuel)}
-													onChange={carFuelTypeSelectHandler}
+													id={type}
+													className="property-checkbox"
+													color="default"
+													value={type}
+													onChange={carBodyTypeSelectHandler}
+													checked={(searchFilter?.search?.carBodyList || []).includes(type as PropertyCarBody)}
 												/>
 											</Stack>
 										))}
 									</div>
-
-									{/* Options */}
 									<div className={'box'}>
-										<span>Transmission</span>
-										{propertyTransmission.map((fuel) => (
-											<Stack key={fuel} className={'input-box'} flexDirection="row">
-												<label htmlFor={fuel} style={{ cursor: 'pointer' }}>
-													<Typography>{fuel}</Typography>
+										<span>Fuel</span>
+										{propertyFuel.map((type: string) => (
+											<Stack className={'input-box'} key={type} flexDirection={'row'}>
+												<label style={{ cursor: 'pointer' }} htmlFor={type}>
+													<Typography className="property-type">{type}</Typography>
 												</label>
 												<Checkbox
-													id={fuel}
-													value={fuel}
-													checked={(searchFilter.search.transmissionList || []).includes(fuel)}
-													onChange={carTransmissionTypeSelectHandler}
+													id={type}
+													className="property-checkbox"
+													color="default"
+													value={type}
+													onChange={carFuelTypeSelectHandler}
+													checked={(searchFilter?.search?.fuelList || []).includes(type as PropertyFuel)}
 												/>
 											</Stack>
 										))}
+									</div>
+									<div className={'box'}>
+										<span>options</span>
+										<div className={'inside'}>
+											<FormControl>
+												<Select
+													value={optionCheck}
+													onChange={propertyOptionSelectHandler}
+													displayEmpty
+													inputProps={{ 'aria-label': 'Without label' }}
+												>
+													<MenuItem value={'all'}>All Options</MenuItem>
+													<MenuItem value={'carBarter'}>Barter</MenuItem>
+													<MenuItem value={'carRent'}>Rent</MenuItem>
+												</Select>
+											</FormControl>
+										</div>
 
-										<span style={{ marginTop: '20px' }}>Options</span>
-
-										<FormControl className="custom-select-wrapper">
-											<Select
-												value={optionCheck}
-												onChange={propertyOptionSelectHandler}
-												displayEmpty
-												className="custom-select"
-												MenuProps={{
-													PaperProps: {
-														className: 'custom-select-menu',
-													},
-												}}
-											>
-												<MenuItem value="all" className="custom-menu-item">
-													All Options
-												</MenuItem>
-												<MenuItem value="propertyBarter" className="custom-menu-item">
-													Barter
-												</MenuItem>
-												<MenuItem value="propertyRent" className="custom-menu-item">
-													Rent
-												</MenuItem>
-											</Select>
-										</FormControl>
+										<div className={'box'}>
+											<span>Transmission</span>
+											{propertyTransmission.map((type: string) => (
+												<Stack className={'input-box'} key={type} flexDirection={'row'}>
+													<label style={{ cursor: 'pointer' }} htmlFor={type}>
+														<Typography className="property-type">{type}</Typography>
+													</label>
+													<Checkbox
+														id={type}
+														className="property-checkbox"
+														color="default"
+														value={type}
+														onChange={carTransmissionTypeSelectHandler}
+														checked={(searchFilter?.search?.transmissionList || []).includes(
+															type as PropertyTransmission,
+														)}
+													/>
+												</Stack>
+											))}
+										</div>
 									</div>
 								</div>
-								<div className={'row-box'} style={{ marginTop: '44px' }}>
-									{/* Year Filter */}
+
+								<div className={'row-box'}>
 									<div className={'box'}>
 										<span>Year</span>
 										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '110px' }}>
-												<Select value={yearCheck.start} onChange={yearStartChangeHandler} MenuProps={MenuProps}>
-													{Array.from({ length: thisYear - 1989 }, (_, i) => 1990 + i).map((year) => (
-														<MenuItem key={year} value={year} disabled={year >= yearCheck.end}>
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={yearCheck.start.toString()}
+													onChange={yearStartChangeHandler}
+													displayEmpty
+													inputProps={{ 'aria-label': 'Without label' }}
+													MenuProps={MenuProps}
+												>
+													{carYears?.slice(0)?.map((year: number) => (
+														<MenuItem value={year} disabled={yearCheck.end <= year} key={year}>
 															{year}
 														</MenuItem>
 													))}
 												</Select>
 											</FormControl>
 											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '110px' }}>
-												<Select value={yearCheck.end} onChange={yearEndChangeHandler} MenuProps={MenuProps}>
-													{Array.from({ length: thisYear - 1989 }, (_, i) => 1990 + i)
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={yearCheck.end.toString()}
+													onChange={yearEndChangeHandler}
+													displayEmpty
+													inputProps={{ 'aria-label': 'Without label' }}
+													MenuProps={MenuProps}
+												>
+													{carYears
+														?.slice(0)
 														.reverse()
-														.map((year) => (
-															<MenuItem key={year} value={year} disabled={year <= yearCheck.start}>
+														.map((year: number) => (
+															<MenuItem value={year} disabled={yearCheck.start >= year} key={year}>
 																{year}
 															</MenuItem>
 														))}
@@ -547,12 +564,16 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 											</FormControl>
 										</div>
 									</div>
-									{/* Mileage Filter */}
 									<div className={'box'}>
-										<span>Mileage</span>
+										<span>mileage</span>
 										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '110px' }}>
-												<Select value={mileCheck.start} onChange={mileStartChangeHandler} MenuProps={MenuProps}>
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={searchFilter?.search?.mileRange?.start}
+													onChange={(e: any) => mileageHandler(e, 'start')}
+													inputProps={{ 'aria-label': 'Mileage Start' }}
+													MenuProps={MenuProps}
+												>
 													{carMileage.map((mileage: number) => (
 														<MenuItem
 															value={mileage}
@@ -565,8 +586,13 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 												</Select>
 											</FormControl>
 											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '110px' }}>
-												<Select value={mileCheck.end} onChange={mileEndChangeHandler} MenuProps={MenuProps}>
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={searchFilter?.search?.mileRange?.end}
+													onChange={(e: any) => mileageHandler(e, 'end')}
+													inputProps={{ 'aria-label': 'Mileage End' }}
+													MenuProps={MenuProps}
+												>
 													{carMileage.map((mileage: number) => (
 														<MenuItem
 															value={mileage}
@@ -582,16 +608,15 @@ const HeaderFilter = ({ initialInput }: HeaderFilterProps) => {
 									</div>
 								</div>
 							</div>
-							<Divider sx={{ mt: 2, mb: 2 }} />
 							<div className={'bottom'}>
 								<div onClick={resetFilterHandler}>
 									<img src="/img/icons/reset.svg" alt="" />
-									<span>Reset all filters</span>
+									<span>Reset All filters</span>
 								</div>
 								<Button
+									startIcon={<img src={'/img/icons/search.svg'} />}
 									className={'search-btn'}
 									onClick={pushSearchHandler}
-									startIcon={<img src="/img/icons/search.svg" />}
 								>
 									Search
 								</Button>

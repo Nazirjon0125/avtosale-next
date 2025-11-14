@@ -41,6 +41,7 @@ export interface PropertyInput {
 	lincolnModel?: LincolnModel;
 	volvoModel?: VolvoModel;
 	propertyLocation: PropertyLocation;
+	propertyCarOptions?: CarOptions[];
 	propertyFuel: PropertyFuel;
 	propertyCarBody: PropertyCarBody;
 	propertyBrand: string;
@@ -49,13 +50,13 @@ export interface PropertyInput {
 	propertyTitle: string;
 	propertyPrice: number;
 	propertyMile: number;
-	propertyYear: number;
+	propertyYear?: number;
 	propertyImages: string[];
 	propertyDesc?: string;
 	propertyBarter?: boolean;
 	propertyRent?: boolean;
 	memberId?: string;
-	constructedAt?: number;
+	constructedAt?: Date;
 }
 
 interface PISearch {

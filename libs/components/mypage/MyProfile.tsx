@@ -18,12 +18,14 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const [updateData, setUpdateData] = useState<MemberUpdate>(initialValues);
 
 	/** APOLLO REQUESTS **/
-const [updateMember] = useMutation(UPDATE_MEMBER)
+	const [updateMember] = useMutation(UPDATE_MEMBER);
 	/** LIFECYCLES **/
 	useEffect(() => {
 		setUpdateData({
 			...updateData,
 			memberNick: user.memberNick,
+			memberFullName: user.memberFullName,
+			memberDesc: user.memberDesc,
 			memberPhone: user.memberPhone,
 			memberAddress: user.memberAddress,
 			memberImage: user.memberImage,
@@ -77,32 +79,27 @@ const [updateMember] = useMutation(UPDATE_MEMBER)
 	};
 
 	const updatePropertyHandler = useCallback(async () => {
-  try {
-    if (!user._id) throw new Error(Messages.error2);
-    updateData._id = user._id;
-    const result = await updateMember({
-      variables: {
-        input: updateData,
-      },
-    });
+		try {
+			if (!user._id) throw new Error(Messages.error2);
+			updateData._id = user._id;
+			const result = await updateMember({
+				variables: {
+					input: updateData,
+				},
+			});
 
-    // @ts-ignore
-    const jwtToken = result.data.updateMember?.accessToken;
-    await updateStorage({ jwtToken });
-    updateUserInfo(result.data.updateMember?.accessToken);
-    await sweetMixinSuccessAlert('information updated successfully.');
-  } catch (err: any) {
-    sweetErrorHandling(err).then();
-  }
-}, [updateData]);
+			// @ts-ignore
+			const jwtToken = result.data.updateMember?.accessToken;
+			await updateStorage({ jwtToken });
+			updateUserInfo(result.data.updateMember?.accessToken);
+			await sweetMixinSuccessAlert('information updated successfully.');
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
+	}, [updateData]);
 
 	const doDisabledCheck = () => {
-		if (
-			updateData.memberNick === '' ||
-			updateData.memberPhone === '' ||
-			updateData.memberAddress === '' ||
-			updateData.memberImage === ''
-		) {
+		if (updateData.memberNick === '' || updateData.memberPhone === '') {
 			return true;
 		}
 	};
@@ -116,7 +113,7 @@ const [updateMember] = useMutation(UPDATE_MEMBER)
 			<div id="my-profile-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">My Profile</Typography>
+						<Typography className="main-title">{updateData.memberNick} Profile</Typography>
 						<Typography className="sub-title">We are glad to see you again!</Typography>
 					</Stack>
 				</Stack>
@@ -151,31 +148,50 @@ const [updateMember] = useMutation(UPDATE_MEMBER)
 					</Stack>
 					<Stack className="small-input-box">
 						<Stack className="input-box">
-							<Typography className="title">Username</Typography>
+							<Typography className="title">User name</Typography>
 							<input
 								type="text"
-								placeholder="Your username"
+								placeholder="Your Username"
 								value={updateData.memberNick}
 								onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberNick: value })}
 							/>
 						</Stack>
+
 						<Stack className="input-box">
 							<Typography className="title">Phone</Typography>
 							<input
 								type="text"
-								placeholder="Your Phone"
+								placeholder="Phone number"
 								value={updateData.memberPhone}
 								onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberPhone: value })}
 							/>
 						</Stack>
+						<Stack className="input-box">
+							<Typography className="title">Full Name</Typography>
+							<input
+								type="text"
+								placeholder="Full Name"
+								value={updateData.memberFullName}
+								onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberFullName: value })}
+							/>
+						</Stack>
+						<Stack className="input-box">
+							<Typography className="title">Address</Typography>
+							<input
+								type="text"
+								placeholder="Your address"
+								value={updateData.memberAddress}
+								onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberAddress: value })}
+							/>
+						</Stack>
 					</Stack>
 					<Stack className="address-box">
-						<Typography className="title">Address</Typography>
+						<Typography className="title">About Me</Typography>
 						<input
 							type="text"
-							placeholder="Your address"
-							value={updateData.memberAddress}
-							onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberAddress: value })}
+							placeholder="Bio"
+							value={updateData.memberDesc}
+							onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberDesc: value })}
 						/>
 					</Stack>
 					<Stack className="about-me-box">
@@ -207,7 +223,9 @@ MyProfile.defaultProps = {
 		memberImage: '',
 		memberNick: '',
 		memberPhone: '',
+		memberFullName: '',
 		memberAddress: '',
+		memberDesc: '',
 	},
 };
 

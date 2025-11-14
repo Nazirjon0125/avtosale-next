@@ -5,7 +5,7 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper';
+import { Autoplay, Grid, Navigation, Pagination } from 'swiper';
 
 import TrendCarCard from './TrendCarCard';
 import { useMutation, useQuery } from '@apollo/client';
@@ -155,12 +155,12 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>{t('Featured Car Listings')}</span>
+							<span>{t('Trend Cars ')}</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>
 								<WestIcon className={'swiper-trend-prev'} />
-								<div className={'swiper-trend-pagination'}></div>
+								<span className={'swiper-trend-pagination'}></span>
 								<EastIcon className={'swiper-trend-next'} />
 							</div>
 						</Box>
@@ -168,31 +168,12 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 					<Stack className="car-filter-box">
 						<Stack className="car-filter-boxes">
 							<Typography
-								onClick={() => carSearchChangeHandler('propertyViews')}
-								className={activeSort === 'propertyViews' ? 'active' : ''}
-							>
-								{t('Popular Cars')}
-							</Typography>
-							<Typography
 								onClick={() => carSearchChangeHandler('propertyLikes')}
 								className={activeSort === 'propertyLikes' ? 'active' : ''}
 							>
-								{t('Trending Cars')}
-							</Typography>
-							<Typography
-								onClick={() => carSearchChangeHandler('propertyRank')}
-								className={activeSort === 'propertyRank' ? 'active' : ''}
-							>
-								{t('Top Cars')}
+								{t('Trend is based on likes')}
 							</Typography>
 						</Stack>
-						<Divider
-							sx={{
-								color: '#e9e9e9',
-								width: '100%',
-								height: '1px',
-							}}
-						/>
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendCars.length === 0 ? (
@@ -202,14 +183,15 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 						) : (
 							<Swiper
 								className={'trend-car-swiper'}
-								slidesPerView={4}
-								spaceBetween={10}
-								modules={[Autoplay, Navigation, Pagination]}
+								slidesPerView={5}
+								spaceBetween={20}
+								modules={[Autoplay, Navigation, Pagination, Grid]}
 								navigation={{
 									nextEl: '.swiper-trend-next',
 									prevEl: '.swiper-trend-prev',
 								}}
 								pagination={{
+									clickable: true,
 									el: '.swiper-trend-pagination',
 								}}
 							>
@@ -232,8 +214,8 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 TrendProperties.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 6,
-		sort: 'propertyViews',
+		limit: 15,
+		sort: 'propertyLikes',
 		direction: 'DESC',
 		search: {},
 	},

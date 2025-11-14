@@ -70,6 +70,7 @@ export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
 				volvoModel
 				propertyFuel
 				propertyCarBody
+				propertyTransmission
 				propertyStatus
 				propertyLocation
 				propertyAddress

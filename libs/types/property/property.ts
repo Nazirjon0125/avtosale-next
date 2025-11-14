@@ -1,6 +1,7 @@
 import {
 	AudiModel,
 	BMWModel,
+	CarOptions,
 	ChevroletModel,
 	HondaModel,
 	HyundaiModel,
@@ -54,6 +55,7 @@ export interface Property {
 	propertyCarBody: PropertyCarBody;
 	propertyStatus: PropertyStatus;
 	propertyLocation: PropertyLocation;
+	propertyCarOptions: CarOptions;
 	propertyTransmission: PropertyTransmission;
 	propertyAddress: string;
 	propertyTitle: string;
@@ -71,7 +73,7 @@ export interface Property {
 	memberId: string;
 	soldAt?: Date;
 	deletedAt?: Date;
-	constructedAt?: number;
+	constructedAt?: Date;
 	createdAt: Date;
 	updatedAt: Date;
 	/** from aggregation **/

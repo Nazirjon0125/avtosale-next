@@ -20,7 +20,7 @@ const TuiEditor = () => {
 	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.FREE);
 
 	/** APOLLO REQUESTS **/
-	const [createboardArticle] = useMutation(CREATE_BOARD_ARTICLE)
+	const [createboardArticle] = useMutation(CREATE_BOARD_ARTICLE);
 
 	const memoizedValues = useMemo(() => {
 		const articleTitle = '',
@@ -83,31 +83,31 @@ const TuiEditor = () => {
 
 	const handleRegisterButton = async () => {
 		try {
-  const editor = editorRef.current;
-  const articleContent = editor?.getInstance().getHTML() as string;
-  memoizedValues.articleContent = articleContent;
+			const editor = editorRef.current;
+			const articleContent = editor?.getInstance().getHTML() as string;
+			memoizedValues.articleContent = articleContent;
 
-  if (memoizedValues.articleContent === '' && memoizedValues.articleTitle === '') {
-    throw new Error(Message.INSERT_ALL_INPUTS);
-  }
+			if (memoizedValues.articleContent === '' && memoizedValues.articleTitle === '') {
+				throw new Error(Message.INSERT_ALL_INPUTS);
+			}
 
-  await createboardArticle({
-    variables: {
-      input: { ...memoizedValues, articleCategory },
-    },
-  });
+			await createboardArticle({
+				variables: {
+					input: { ...memoizedValues, articleCategory },
+				},
+			});
 
-  await sweetTopSuccessAlert('Article is created successfully', 700);
-  await router.push({
-    pathname: '/mypage',
-    query: {
-      category: 'myArticles',
-    },
-  });
-} catch (err: any) {
-  console.log(err);
-  sweetErrorHandling(new Error(Message.INSERT_ALL_INPUTS)).then();
-}
+			await sweetTopSuccessAlert('Article is created successfully', 700);
+			await router.push({
+				pathname: '/mypage',
+				query: {
+					category: 'myArticles',
+				},
+			});
+		} catch (err: any) {
+			console.log(err);
+			sweetErrorHandling(new Error(Message.INSERT_ALL_INPUTS)).then();
+		}
 	};
 
 	const doDisabledCheck = () => {
@@ -133,7 +133,7 @@ const TuiEditor = () => {
 							<MenuItem value={BoardArticleCategory.FREE}>
 								<span>Free</span>
 							</MenuItem>
-							<MenuItem value={BoardArticleCategory.HUMOR}>Humor</MenuItem>
+							<MenuItem value={BoardArticleCategory.SERVICE}>Service</MenuItem>
 							<MenuItem value={BoardArticleCategory.NEWS}>News</MenuItem>
 							<MenuItem value={BoardArticleCategory.RECOMMEND}>Recommendation</MenuItem>
 						</Select>

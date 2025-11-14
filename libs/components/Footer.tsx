@@ -92,7 +92,7 @@ const Footer = () => {
 							{/* Logo Section */}
 							<div className="subscribe-section">
 								<Link href="/">
-									<img src="/img/logo/solven.png" alt="Solven" style={{ height: '52px' }} />
+									<img src="/img/logo/AVTOBARAKA02.png" alt="" style={{ height: '58px' }} />
 								</Link>
 
 								<div className="input-box">
@@ -167,7 +167,7 @@ const Footer = () => {
 							{/* Logo Section */}
 							<div className="subscribe-section">
 								<Link href="/">
-									<img src="/img/logo/avtobaraka.png" alt="AvtoBaraka" style={{ height: '52px' }} />
+									<img src="/img/logo/avtobaraka02.png" alt="AvtoBaraka" style={{ height: '55px' }} />
 								</Link>
 
 								<div className="input-box">

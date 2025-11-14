@@ -20,6 +20,7 @@ import { userVar } from '../../../apollo/store';
 import { CREATE_PROPERTY, UPDATE_PROPERTY } from '../../../apollo/user/mutation';
 import { GET_PROPERTY } from '../../../apollo/user/query';
 import { BrandModelsMap } from '../../enums/property.enum';
+import { MemberType } from '../../enums/member.enum';
 
 const AddProperty = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -30,6 +31,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 	const [propertyLocation, setPropertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
 	const [propertyCarBody, setPropertyCarBody] = useState<PropertyCarBody[]>(Object.values(PropertyCarBody));
 	const [propertyFuel, setPropertyFuel] = useState<PropertyFuel[]>(Object.values(PropertyFuel));
+	const [propertyCarOptions, setPropertyCarOptions] = useState<CarOptions[]>(Object.values(CarOptions));
 	const [propertyTransmission, setPropertyTransmission] = useState<PropertyTransmission[]>(
 		Object.values(PropertyTransmission),
 	);
@@ -72,6 +74,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			propertyMile: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyMile : 0,
 			propertyYear: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyYear : 0,
 			propertyDesc: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyDesc : '',
+			propertyCarOptions: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyCarOptions : '',
 			propertyImages: getPropertyData?.getProperty ? getPropertyData?.getProperty?.propertyImages : [],
 		});
 	}, [getPropertyLoading, getPropertyData]);
@@ -134,6 +137,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			insertPropertyData.propertyTitle === '' ||
 			insertPropertyData.propertyPrice === 0 || // @ts-ignore
 			insertPropertyData.propertyCarType === '' || // @ts-ignore
+			insertPropertyData.propertyModel === '' || // @ts-ignore
 			insertPropertyData.propertyLocation === '' || // @ts-ignore
 			insertPropertyData.propertyAddress === '' || // @ts-ignore
 			insertPropertyData.propertyBarter === '' || // @ts-ignore
@@ -141,9 +145,9 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			insertPropertyData.propertyFuel === '' || // @ts-ignore
 			insertPropertyData.propertyCarBody === '' || // @ts-ignore
 			insertPropertyData.propertyTransmission === '' ||
-			insertPropertyData.propertyMile === 0 ||
 			insertPropertyData.propertyYear === 0 ||
-			insertPropertyData.propertyDesc === '' ||
+			insertPropertyData.propertyDesc === '' || // @ts-ignore
+			insertPropertyData.propertyCarOptions === '' ||
 			insertPropertyData.propertyImages.length === 0
 		) {
 			return true;
@@ -193,7 +197,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 		}
 	}, [insertPropertyData]);
 
-	if (user?.memberType !== 'AGENT') {
+	if (user?.memberType !== 'AGENT' && user?.memberType !== 'USER') {
 		router.back();
 	}
 
@@ -260,7 +264,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 											))}
 										</>
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 								{/* --- Model Select --- */}
@@ -309,7 +313,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 											))}
 										</>
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 								<Stack className="price-year-after-price">
@@ -343,7 +347,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option value={'yes'}>Yes</option>
 										<option value={'no'}>No</option>
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 								<Stack className="price-year-after-price">
@@ -362,14 +366,14 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option value={'yes'}>Yes</option>
 										<option value={'no'}>No</option>
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 							</Stack>
 
 							<Stack className="config-row">
 								<Stack className="price-year-after-price">
-									<Typography className="title">Manufactured Year</Typography>
+									<Typography className="title"> Year</Typography>
 									<select
 										className="select-description"
 										value={insertPropertyData.propertyYear}
@@ -402,7 +406,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 											<option value={`${fuel}`}>{fuel}</option>
 										))}
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 								<Stack className="price-year-after-price">
@@ -422,7 +426,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 											<option value={`${carBody}`}>{carBody}</option>
 										))}
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 								<Stack className="price-year-after-price">
@@ -441,19 +445,18 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option disabled={true} selected={true} value={'select'}>
 											Select
 										</option>
-										{propertyTransmission.map((fuel: string) => (
-											<option value={`${fuel}`}>{fuel}</option>
+										{propertyTransmission.map((transmission: string) => (
+											<option value={`${transmission}`}>{transmission}</option>
 										))}
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 								<Stack className="price-year-after-price">
 									<Typography className="title">Mileage</Typography>
 									<select
 										className={'select-description'}
-										value={insertPropertyData.propertyMile || 'select'}
-										defaultValue={insertPropertyData.propertyMile || 'select'}
+										value={insertPropertyData.propertyMile == null ? 'select' : insertPropertyData.propertyMile}
 										onChange={({ target: { value } }) =>
 											setInsertPropertyData({ ...insertPropertyData, propertyMile: parseInt(value) })
 										}
@@ -461,16 +464,38 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										<option disabled={true} selected={true} value={'select'}>
 											Select
 										</option>
-										{carMileage.map((mileage: number) => {
-											if (mileage !== 0) {
-												return <option value={`${mileage}`}>{mileage}</option>;
-											}
-										})}
+										{carMileage.map((mileage: number) => (
+											<option key={mileage} value={mileage}>
+												{mileage}
+											</option>
+										))}
 									</select>
-									<div className={'divider'}></div>
+
 									<img src={'/img/icons/Vector.svg'} className={'arrow-down'} />
 								</Stack>
 							</Stack>
+							<div className="config-column">
+								<Typography className="title" mt={3}>
+									Car Options
+								</Typography>
+								<div className="features-grid">
+									{propertyCarOptions.map((option) => (
+										<label key={option} className="feature-item">
+											<input
+												type="checkbox"
+												checked={insertPropertyData.propertyCarOptions?.includes(option) || false}
+												onChange={(e) => {
+													const options = e.target.checked
+														? [...(insertPropertyData.propertyCarOptions || []), option]
+														: (insertPropertyData.propertyCarOptions || []).filter((o) => o !== option);
+													setInsertPropertyData({ ...insertPropertyData, propertyCarOptions: options });
+												}}
+											/>
+											<span>{option}</span>
+										</label>
+									))}
+								</div>
+							</div>
 
 							<Typography className="property-title">Car Description</Typography>
 							<Stack className="config-column">
@@ -600,6 +625,7 @@ AddProperty.defaultProps = {
 		propertyTitle: '',
 		propertyPrice: 0,
 		propertyCarType: '',
+		propertyModel: '',
 		propertyLocation: '',
 		propertyAddress: '',
 		propertyBarter: false,
@@ -609,6 +635,7 @@ AddProperty.defaultProps = {
 		propertyMile: 0,
 		propertyYear: 0,
 		propertyDesc: '',
+		propertyCarOptions: '',
 		propertyImages: [],
 	},
 };

@@ -1,6 +1,7 @@
 import {
 	AudiModel,
 	BMWModel,
+	CarOptions,
 	ChevroletModel,
 	HondaModel,
 	HyundaiModel,
@@ -25,6 +26,11 @@ export interface PropertyUpdate {
 	_id: string;
 	propertyCarType: PropertyCarType;
 	propertyModel: string;
+	propertyFuel: PropertyFuel;
+	propertyCarBody: PropertyCarBody;
+	propertyStatus: PropertyStatus;
+	propertyLocation: PropertyLocation;
+	propertyTransmission: PropertyTransmission;
 	kiaModel?: KiaModel;
 	bmwModel?: BMWModel;
 	hyundaiModel?: HyundaiModel;
@@ -39,11 +45,7 @@ export interface PropertyUpdate {
 	lexusModel?: LexusModel;
 	lincolnModel?: LincolnModel;
 	volvoModel?: VolvoModel;
-	propertyFuel: PropertyFuel;
-	propertyCarBody: PropertyCarBody;
-	propertyStatus: PropertyStatus;
-	propertyLocation: PropertyLocation;
-	propertyTransmission: PropertyTransmission;
+	propertyCarOptions: CarOptions;
 	propertyAddress: string;
 	propertyTitle: string;
 	propertyPrice: number;

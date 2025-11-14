@@ -3,10 +3,10 @@ import { Box, Typography, Card, CardContent } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SpeedIcon from '@mui/icons-material/Speed';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsIcon from '@mui/icons-material/Settings';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
 import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
@@ -160,7 +160,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 					{/* Car Title with hover effect and animated underline */}
 					<Box className="car-title-wrapper">
 						<Typography variant="h6" component="div" className="car-title" onClick={() => pushDetailHandler(car._id)}>
-							{car.propertyTitle}
+							{car.propertyCarType} {car.propertyModel}
 						</Typography>
 					</Box>
 
@@ -174,7 +174,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 						<Box className="feature-item">
 							<SpeedIcon className="feature-icon" />
 							<Typography variant="body2" className="feature-text">
-								{car.propertyMile || '50'} Miles
+								{car.propertyMile || '50'} Km
 							</Typography>
 						</Box>
 
@@ -189,6 +189,13 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 							<SettingsIcon className="feature-icon" />
 							<Typography variant="body2" className="feature-text">
 								{car.propertyTransmission}
+							</Typography>
+						</Box>
+
+						<Box className="feature-item">
+							<LocationOnIcon className="feature-icon" />
+							<Typography variant="body2" className="feature-text">
+								{car.propertyLocation}
 							</Typography>
 						</Box>
 					</Box>

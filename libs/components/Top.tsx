@@ -1,9 +1,10 @@
+import { Notification } from '../types/notification/notification';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, IconButton } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
@@ -13,10 +14,15 @@ import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import { useReactiveVar } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
+import { RippleBadge } from '../../scss/MaterialTheme/styled';
+import { GET_UNREADNOTIFICATIONS } from '../../apollo/user/query';
+import { T } from '../types/common';
+import Notifications from './Notifications';
+import { cursorTo } from 'readline';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -27,10 +33,12 @@ const Top = () => {
 	const [lang, setLang] = useState<string | null>('en');
 	const drop = Boolean(anchorEl2);
 	const [colorChange, setColorChange] = useState(false);
+	const [notifOpen, setNotifOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = React.useState<any | HTMLElement>(null);
 	let open = Boolean(anchorEl);
 	const [bgColor, setBgColor] = useState<boolean>(false);
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
+	const [unreadCount, setUnreadCount] = useState<number>(0);
 	const logoutOpen = Boolean(logoutAnchor);
 
 	/** LIFECYCLES **/
@@ -57,6 +65,20 @@ const Top = () => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
 	}, []);
+	const hasToken = !!getJwtToken();
+	const {
+		loading: getUnreadNotificationsLoading,
+		data: getUnreadNotificationsData,
+		error: getUnreadNotificationsError,
+		refetch: getUnreadNotificationsRefetch,
+	} = useQuery(GET_UNREADNOTIFICATIONS, {
+		skip: !hasToken,
+		fetchPolicy: 'cache-and-network',
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setUnreadCount(data?.unreadNotificationsCount ?? 0);
+		},
+	});
 
 	/** HANDLERS **/
 	const langClick = (e: any) => {
@@ -96,6 +118,8 @@ const Top = () => {
 			setAnchorEl(null);
 		}
 	};
+	// inside Top component, before return:
+	const isActive = (path: string) => router.pathname === path || router.asPath.startsWith(path);
 
 	const StyledMenu = styled((props: MenuProps) => (
 		<Menu
@@ -146,16 +170,16 @@ const Top = () => {
 					<div>{t('Home')}</div>
 				</Link>
 				<Link href={'/property'}>
-					<div>{t('Properties')}</div>
+					<div>{t('All cars')}</div>
 				</Link>
 				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+					<div> {t('Dillers')} </div>
 				</Link>
 				<Link href={'/community?articleCategory=FREE'}>
 					<div> {t('Community')} </div>
 				</Link>
 				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
+					<div> {t('Help')} </div>
 				</Link>
 			</Stack>
 		);
@@ -166,7 +190,7 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/avtobaraka.png" alt="" />
+								<img src="/img/logo/avtobaraka02.png" alt="" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
@@ -174,10 +198,10 @@ const Top = () => {
 								<div>{t('Home')}</div>
 							</Link>
 							<Link href={'/property'}>
-								<div>{t('Properties')}</div>
+								<div>{t('All Cars')}</div>
 							</Link>
 							<Link href={'/agent'}>
-								<div> {t('Agents')} </div>
+								<div> {t('Dillers')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=FREE'}>
 								<div> {t('Community')} </div>
@@ -188,7 +212,7 @@ const Top = () => {
 								</Link>
 							)}
 							<Link href={'/cs'}>
-								<div> {t('CS')} </div>
+								<div> {t('Help')} </div>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'user-box'}>
@@ -223,59 +247,57 @@ const Top = () => {
 									<div className={'join-box'}>
 										<AccountCircleOutlinedIcon />
 										<span>
-											{t('Login')} / {t('Register')}
+											{t('Login')} / {t('SignUp')}
 										</span>
 									</div>
 								</Link>
 							)}
 
 							<div className={'lan-box'}>
-								{user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />}
+								{user?._id && (
+									<NotificationsOutlinedIcon
+										className="notification-icon"
+										style={{ cursor: 'pointer' }}
+										onClick={() => setNotifOpen(true)}
+									/>
+								)}
+
+								<RippleBadge style={{ margin: '-18px 0 0 1px' }} badgeContent={unreadCount} />
+
+								<Notifications open={notifOpen} onClose={() => setNotifOpen(false)} />
 								<Button
 									disableRipple
 									className="btn-lang"
 									onClick={langClick}
 									endIcon={<CaretDown size={14} color="#616161" weight="fill" />}
 								>
-									<Box component={'div'} className={'flag'}>
+									<Box component="div" className="flag">
 										{lang !== null ? (
-											<img src={`/img/flag/lang${lang}.png`} alt={'usaFlag'} />
+											<img src={`/img/flag/lang${lang}.png`} alt="usaFlag" />
 										) : (
-											<img src={`/img/flag/langen.png`} alt={'usaFlag'} />
+											<img src="/img/flag/langen.png" alt="usaFlag" />
 										)}
 									</Box>
 								</Button>
 
 								<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose} sx={{ position: 'absolute' }}>
 									<MenuItem disableRipple onClick={langChoice} id="en">
-										<img
-											className="img-flag"
-											src={'/img/flag/langen.png'}
-											onClick={langChoice}
-											id="en"
-											alt={'usaFlag'}
-										/>
+										<img className="img-flag" src="/img/flag/langen.png" id="en" alt="usaFlag" />
 										{t('English')}
 									</MenuItem>
+
 									<MenuItem disableRipple onClick={langChoice} id="kr">
-										<img
-											className="img-flag"
-											src={'/img/flag/langkr.png'}
-											onClick={langChoice}
-											id="uz"
-											alt={'koreanFlag'}
-										/>
+										<img className="img-flag" src="/img/flag/langkr.png" id="kr" alt="koreanFlag" />
 										{t('Korean')}
 									</MenuItem>
+
 									<MenuItem disableRipple onClick={langChoice} id="ru">
-										<img
-											className="img-flag"
-											src={'/img/flag/langru.png'}
-											onClick={langChoice}
-											id="ru"
-											alt={'russiaFlag'}
-										/>
+										<img className="img-flag" src="/img/flag/langru.png" id="ru" alt="russiaFlag" />
 										{t('Russian')}
+									</MenuItem>
+									<MenuItem disableRipple onClick={langChoice} id="uz">
+										<img className="img-flag" src="/img/flag/languz.png" id="ru" alt="uzbekFlag" />
+										{t('Uzbek')}
 									</MenuItem>
 								</StyledMenu>
 							</div>

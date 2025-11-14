@@ -11,6 +11,9 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import SpeedIcon from '@mui/icons-material/Speed';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 
 interface PropertyCardType {
 	property: Property;
@@ -47,9 +50,6 @@ const PropertyCard = (props: PropertyCardType) => {
 							<Typography>TOP</Typography>
 						</Box>
 					)}
-					<Box component={'div'} className={'price-box'}>
-						<Typography>${formatterStr(property?.propertyPrice)}</Typography>
-					</Box>
 				</Stack>
 				<Stack className="bottom">
 					<Stack className="name-address">
@@ -65,37 +65,26 @@ const PropertyCard = (props: PropertyCardType) => {
 						</Stack>
 						<Stack className="address">
 							<Typography>
-								{property.propertyAddress}, {property.propertyLocation}
+								{property.propertyLocation}-{property.propertyAddress}
 							</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="options">
 						<Stack className="option">
-							<img src="/img/icons/bed.svg" alt="" /> <Typography>{property.propertyFuel} bed</Typography>
+							<LocalGasStationIcon className="option-icon" /> <Typography>{property.propertyFuel} </Typography>
 						</Stack>
 						<Stack className="option">
-							<img src="/img/icons/room.svg" alt="" /> <Typography>{property.propertyCarBody} room</Typography>
+							<DirectionsCarIcon className="option-icon" /> <Typography>{property.propertyCarBody} </Typography>
 						</Stack>
 						<Stack className="option">
-							<img src="/img/icons/expand.svg" alt="" /> <Typography>{property.propertyMile} m2</Typography>
+							<SpeedIcon className="option-icon" /> <Typography>{property.propertyMile} km</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="divider"></Stack>
 					<Stack className="type-buttons">
-						<Stack className="type">
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								className={property.propertyRent ? '' : 'disabled-type'}
-							>
-								Rent
-							</Typography>
-							<Typography
-								sx={{ fontWeight: 500, fontSize: '13px' }}
-								className={property.propertyBarter ? '' : 'disabled-type'}
-							>
-								Barter
-							</Typography>
-						</Stack>
+						<Box component={'div'} className={'price-box'}>
+							<Typography>${formatterStr(property?.propertyPrice)}</Typography>
+						</Box>
 						{!recentlyVisited && (
 							<Stack className="buttons">
 								<IconButton color={'default'}>

@@ -116,9 +116,9 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						<Stack className="main-box">
 							<Stack className="left-config">
 								<Stack className={'image-info'}>
-									<img src={'/img/logo/logoText.svg'} />
+									<img src={'/img/logo/avtologo.png'} />
 									<Stack className={'community-name'}>
-										<Typography className={'name'}>Nestar Community</Typography>
+										<Typography className={'name'}>Community</Typography>
 									</Stack>
 								</Stack>
 
@@ -146,9 +146,9 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 										className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
 									/>
 									<Tab
-										value={'HUMOR'}
-										label={'Humor'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
+										value={'SERVICE'}
+										label={'Service'}
+										className={`tab-button ${searchCommunity.search.articleCategory == 'SERVICE' ? 'active' : ''}`}
 									/>
 								</TabList>
 							</Stack>
@@ -236,7 +236,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 											)}
 										</Stack>
 									</TabPanel>
-									<TabPanel value="HUMOR">
+									<TabPanel value="SERVICE">
 										<Stack className="list-box">
 											{totalCount ? (
 												boardArticles?.map((boardArticle: BoardArticle) => {

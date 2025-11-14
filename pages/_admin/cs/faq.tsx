@@ -13,6 +13,7 @@ import TablePagination from '@mui/material/TablePagination';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { FaqArticlesPanelList } from '../../../libs/components/admin/cs/FaqList';
+import { useRouter } from 'next/router';
 
 const FaqArticles: NextPage = (props: any) => {
 	const [anchorEl, setAnchorEl] = useState<[] | HTMLElement[]>([]);
@@ -99,13 +100,14 @@ const FaqArticles: NextPage = (props: any) => {
 							<Divider />
 						</Box>
 						<FaqArticlesPanelList
-							// dense={dense}
-							// membersData={membersData}
-							// searchMembers={searchMembers}
-							anchorEl={anchorEl}
-							// handleMenuIconClick={handleMenuIconClick}
-							// handleMenuIconClose={handleMenuIconClose}
-							// generateMentorTypeHandle={generateMentorTypeHandle}
+						// dense={dense}
+						// membersData={membersData}
+						// searchMembers={searchMembers}
+						// anchorEl={anchorEl}
+
+						// handleMenuIconClick={handleMenuIconClick}
+						// handleMenuIconClose={handleMenuIconClose}
+						// generateMentorTypeHandle={generateMentorTypeHandle}
 						/>
 
 						<TablePagination

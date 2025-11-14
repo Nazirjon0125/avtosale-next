@@ -143,6 +143,7 @@ export const CREATE_PROPERTY = gql`
 			lincolnModel
 			volvoModel
 			propertyFuel
+			propertyCarOptions
 			propertyCarBody
 			propertyStatus
 			propertyLocation
@@ -232,6 +233,7 @@ export const LIKE_TARGET_PROPERTY = gql`
 			volvoModel
 			propertyFuel
 			propertyCarBody
+			propertyTransmission
 			propertyStatus
 			propertyLocation
 			propertyAddress
@@ -374,5 +376,55 @@ export const UNSUBSCRIBE = gql`
 			createdAt
 			updatedAt
 		}
+	}
+`;
+
+export const MARKNOTIFICATIONREAD = gql`
+	mutation MarkNotificationRead($id: String!) {
+		markNotificationRead(id: $id) {
+			_id
+			notificationType
+			notificationStatus
+			notificationGroup
+			notificationTitle
+			notificationDesc
+			authorId
+			receiverId
+			propertyId
+			articleId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const MARKALLNOTIFICATIONREAD = gql`
+	mutation MarkAllNotificationsRead {
+		markAllNotificationsRead
+	}
+`;
+
+export const REMOVENOTIFICATION = gql`
+	mutation RemoveNotification($id: String!) {
+		removeNotification(id: $id) {
+			_id
+			notificationType
+			notificationStatus
+			notificationGroup
+			notificationTitle
+			notificationDesc
+			authorId
+			receiverId
+			propertyId
+			articleId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const REMOVEALLNOTIFICATION = gql`
+	mutation RemoveAllNotifications {
+		removeAllNotifications
 	}
 `;
