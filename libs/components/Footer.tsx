@@ -167,7 +167,7 @@ const Footer = () => {
 							{/* Logo Section */}
 							<div className="subscribe-section">
 								<Link href="/">
-									<img src="/img/logo/avtobaraka02.png" alt="AvtoBaraka" style={{ height: '55px' }} />
+									<img src="/img/logo/avtobaraka.png" alt="AvtoBaraka" style={{ height: '55px' }} />
 								</Link>
 
 								<div className="input-box">

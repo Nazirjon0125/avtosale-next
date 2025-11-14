@@ -1,5 +1,3 @@
-version: '3.3'
-
 services:
   avtosale-next:
     container_name: avto-baraka-next

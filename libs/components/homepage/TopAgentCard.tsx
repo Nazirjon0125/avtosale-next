@@ -155,7 +155,7 @@ const TopAgentCard = (props: TopAgentProps) => {
 							<DirectionsCarIcon />
 							<span>{agent.memberProperties}</span>
 						</div>
-						<Typography component={'p'}>Dillers</Typography>
+						<Typography component={'p'}>Cars</Typography>
 					</Stack>
 					<Stack gap={'5px'}>
 						<div className="stat-item">
