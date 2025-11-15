@@ -69,8 +69,8 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 
 	/** HANDLERS **/
 	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
-		const newFilter = { ...searchFilter, page: value }; // yangi obyekt
-		setSearchFilter(newFilter);
+		// const newFilter = { ...searchFilter, page: value }; // yangi obyekt
+		// setSearchFilter(newFilter);
 		searchFilter.page = value;
 		await router.push(
 			`/property?input=${JSON.stringify(searchFilter)}`,
