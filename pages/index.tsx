@@ -27,7 +27,6 @@ const Home: NextPage = () => {
 			<Stack className={'home-page'}>
 				<TrendProperties />
 				<PopularCar />
-
 				<TopProperties />
 				<TopAgents />
 			</Stack>
@@ -37,7 +36,6 @@ const Home: NextPage = () => {
 			<Stack className={'home-page'}>
 				<TrendProperties />
 				<PopularCar />
-
 				<TopProperties />
 				<TopAgents />
 				<CommunityBoards />

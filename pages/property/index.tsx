@@ -69,8 +69,6 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 
 	/** HANDLERS **/
 	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
-		// const newFilter = { ...searchFilter, page: value }; // yangi obyekt
-		// setSearchFilter(newFilter);
 		searchFilter.page = value;
 		await router.push(
 			`/property?input=${JSON.stringify(searchFilter)}`,
@@ -128,7 +126,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <h1>CAR MOBILE</h1>;
+		return <h1>PROPERTIES MOBILE</h1>;
 	} else {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
@@ -203,7 +201,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 								{properties.length !== 0 && (
 									<Stack className="total-result">
 										<Typography>
-											Total {total} car{total > 1 ? 's' : 'y'} available
+											Total {total} propert{total > 1 ? 'ies' : 'y'} available
 										</Typography>
 									</Stack>
 								)}
